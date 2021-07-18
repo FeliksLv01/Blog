@@ -1,13 +1,17 @@
 ---
-title: 树莓派无屏幕配置
+title: 树莓派64位系统无屏幕配置
 date: 2021-07-13
 tags:
  - 树莓派
 ---
 
+## 下载并烧写系统
+
+使用的64位系统为树莓派爱好者基地的开源系统。
+[仓库地址](https://gitee.com/openfans-community/Debian-Pi-Aarch64/)
 使用官方工具烧写系统。烧写完，进行ssh和wifi的配置。
 
-### ssh和wifi配置
+## ssh和wifi配置
 
 SSH
 
@@ -47,20 +51,20 @@ priority=2
 ssh可以通过这样连接，默认密码为`raspberry`。
 
 ```shell
-ssh pi@raspberrypi.local
+ssh pi@raspbian.local
 ```
 
-#### SSH免密
+### SSH免密
 
 ```shell
-ssh-copy-id -i ~/.ssh/id_rsa.pub pi@raspberrypi.local
+ssh-copy-id -i ~/.ssh/id_rsa.pub pi@raspbian.local
 ```
 
 之后在本地的ssh config文件里加上下面的部分
 
 ```shell
 Host pi
-    HostName raspberrypi.local
+    HostName raspbian.local
     User pi
     IdentityFile ~/.ssh/id_rsa
     IdentitiesOnly yes
@@ -68,8 +72,9 @@ Host pi
 
 之后就可以直接通过`ssh pi`来进行连接。
 
-### apt-get国内镜像
+## apt-get国内镜像
 
+系统默认是华为云镜像，这一步是可选的。
 修改`/etc/apt/sources.list`
 
 ```bash
