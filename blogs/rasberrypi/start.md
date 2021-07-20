@@ -125,4 +125,59 @@ source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source .zshrc
 ```
 
+## 配置内网穿透
+
+如果你有服务器的话，可以使用frp来实现内网穿透，具体方法在之前的一篇树莓派监控的文章里已经介绍过了。
+
+这里介绍不需要使用服务器的一种方式，即借助[「网云穿」](https://www.xiaomy.net/)平台。这个平台提供了免费内网穿透服务，注册账号 → 领取免费隧道，然后跳转控制台点击隧道管理、配置隧道信息即可。
+
+### 安装客户端
+
+```shell
+wget http://xiaomy.net/download/linux/wyc_linux_arm
+sudo chmod 777 wyc_linux_arm
+```
+
+运行
+
+```shell
+/home/pi/wyc_linux_arm -token XXXX
+```
+
+### 编写启动脚本
+
+`SITE_TO_CHECK`可以改成你的网关地址。之所以添加这样一个启动脚本，是因为直接启动的话，有可能系统网络还没有连接好，这样就会启动失败。
+
+```shell
+#!/bin/bash
+
+# check network availability
+while true
+do
+  TIMEOUT=5
+  SITE_TO_CHECK="192.168.199.1"
+  RET_CODE=`curl -I -s --connect-timeout $TIMEOUT $SITE_TO_CHECK -w %{http_code} | tail -n1`
+  if [ "x$RET_CODE" = "x200" ]; then
+  echo "Network OK !!!"
+  break
+  else
+  echo "Network not ready, wait..."
+  sleep 1s
+  fi
+done
+
+nohup /home/pi/wyc_linux_arm -token=xxx &
+```
+
+### 设置开机自启
+
+编辑`/etc/rc.local`
+
+在`exit 0`之前加上一行`/home/pi/start.sh`
+
+之后就可以通过域名连接
+
+```shell
+ssh -p 端口号 pi@域名
+```
 
