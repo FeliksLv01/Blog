@@ -194,3 +194,5 @@ class MainActivity : ComponentActivity() {
     }
 }
 ```
+
+<img src="./images/compose-count.jpg" alt="Compose-Count" style="zoom:50%;" />
