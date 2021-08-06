@@ -14,7 +14,7 @@ tags:
 
 - [入门路线](https://developer.android.google.cn/courses/pathways/compose)
 - [视频资料](https://list.youku.com/albumlist/show/id_59672719)
-- [CodeLab](https://developersummit.googlecnapps.cn/)
+- [CodeLab](https://developer.android.google.cn/courses/pathways/compose)
 - [中文文档](https://docs.compose.net.cn/)
 
 ## Compose简介
