@@ -187,11 +187,11 @@ Content-Security=Policy: script-src 'self' https://domain.com
 
 #### iframe攻击
 
-![iframe攻击](images/iframe.png)
+![iframe攻击](./images/iframe.png)
 
 #### SameSite Cookie
 
-![SameSite Cookie](images/samesite-cookie.png)
+![SameSite Cookie](./images/samesite-cookie.png)
 
 ## Injection
 
@@ -312,7 +312,7 @@ public async webHook(ctx) {
 
 #### SYN Flood
 
-![SYN Flood](images/syn-flood.png)
+![SYN Flood](./images/syn-flood.png)
 
 ### 防御DDoS
 
@@ -328,7 +328,7 @@ public async webHook(ctx) {
 
 ### 中间人攻击
 
-![中间人攻击](images/middle.png)
+![中间人攻击](./images/middle.png)
 原因：
 
 - 明文传输
@@ -345,7 +345,7 @@ HTTPS
 
 #### TLS 1.2
 
-![TLS 1.2](images/tls.png)
+![TLS 1.2](./images/tls.png)
 
 #### HTTPS完整性
 
