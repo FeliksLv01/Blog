@@ -47,16 +47,19 @@ ReactDOM.render(VDOM, document.getElementById('test'));
 ## JSX 语法规则
 
 jsx 语法规则：
+::: v-pre
 
 1. 定义虚拟 DOM 时，不要写引号。
 2. 标签中混入 JS 表达式时要用`{}`。
 3. 样式的类名指定不要用 `class`，要用 `className`。
-4. 内联样式，见下面示例。
+4. 内联样式，要用`style={{key:value}}`的形式去写。
 5. 只有一个根标签
 6. 标签必须闭合
 7. 标签首字母
    (1).若小写字母开头，则将该标签转为 html 中同名元素，若 html 中无该标签对应的同名元素，则报错。
    (2).若大写字母开头，react 就去渲染对应的组件，若组件没有定义，则报错。
+
+:::
 
 ```js
 const myId = 'aTgUiGu';
