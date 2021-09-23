@@ -21,7 +21,8 @@ tags:
 
 ```js
 //1.创建虚拟DOM
-const VDOM /* 此处一定不要写引号，因为不是字符串 */ = (
+const VDOM = (
+  /* 此处一定不要写引号，因为不是字符串 */
   <h1 id='title'>
     <span>Hello,React</span>
   </h1>
@@ -48,9 +49,9 @@ ReactDOM.render(VDOM, document.getElementById('test'));
 jsx 语法规则：
 
 1. 定义虚拟 DOM 时，不要写引号。
-2. 标签中混入 JS 表达式时要用{}。
-3. 样式的类名指定不要用 class，要用 className。
-4. 内联样式，要用 style={{key:value}}的形式去写。
+2. 标签中混入 JS 表达式时要用`{}`。
+3. 样式的类名指定不要用 `class`，要用 `className`。
+4. 内联样式，见下面示例。
 5. 只有一个根标签
 6. 标签必须闭合
 7. 标签首字母
@@ -91,7 +92,7 @@ function MyComponent() {
 ReactDOM.render(<MyComponent />, document.getElementById('test'));
 ```
 
-执行了 ReactDOM.render(<MyComponent/>.......之后，发生了什么？
+执行了 ReactDOM.render(`<MyComponent/>`.......之后，发生了什么？
 
 1. React 解析组件标签，找到了 MyComponent 组件。
 2. 发现组件是使用函数定义的，随后调用该函数，将返回的虚拟 DOM 转为真实 DOM，随后呈现在页面中。
@@ -108,13 +109,13 @@ class MyComponent extends Component {
 }
 ```
 
-执行了 ReactDOM.render(<MyComponent/>.......之后，发生了什么？
+执行了 ReactDOM.render(`<MyComponent/>`.......之后，发生了什么？
 
 1. React 解析组件标签，找到了 MyComponent 组件。
 2. 发现组件是使用类定义的，随后 new 出来该类的实例，并通过该实例调用到原型上的 render 方法。
 3. 将 render 返回的虚拟 DOM 转为真实 DOM，随后呈现在页面中。
 
-```tsx
+```jsx
 import { Component } from 'react';
 
 interface IMyComponentState {
@@ -160,7 +161,7 @@ export default MyComponent;
 
 因为箭头函数没有自己的 this。如果我们在这样的函数中引用 this，this 值取决于外部"正常的"函数。
 
-```tsx
+```jsx
 class MyComponent extends Component<{}, IMyComponentState> {
   state = { isHot: true };
   render() {
@@ -210,7 +211,7 @@ console.log(person3);
 
 在 React 中可以使用展开运算符来传递标签参数
 
-```tsx
+```jsx
 function Test() {
   const person: IPersonProps = { name: 'tom', age: 12, sex: '男' };
   return <PersonCeil {...person} />;
