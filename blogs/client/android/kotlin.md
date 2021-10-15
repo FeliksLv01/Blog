@@ -3,9 +3,9 @@ title: Kotlin笔记
 date: 2021-05-15
 sidebar: 'auto'
 categories:
- - 客户端
+  - 客户端
 tags:
- - Kotlin
+  - Kotlin
 ---
 
 ## 变量
@@ -16,7 +16,42 @@ tags:
 var a: Int = 10
 ```
 
-kotlin完全抛弃了java中的基本类型，全部使用了对象数据类型。
+kotlin 完全抛弃了 java 中的基本类型，全部使用了对象数据类型。
+
+## 数组
+
+|          |    Kotlin     | Java        |
+| :------: | :-----------: | ----------- |
+|   整型   |   IntArray    | int[]       |
+| 整型装箱 |  Array<Int>   | Integer[]   |
+|   字符   |   CharArray   | char[]      |
+| 字符装箱 |  Array<Char>  | Character[] |
+|  字符串  | Array<String> | String[]    |
+
+数组的创建
+
+```kotlin
+val c0 = intArrayOf(1, 2, 3, 4)
+val c1 = IntArray(5) { it + 1 }
+println(c1.contentToString()) // [1, 2, 3, 4, 5] 便捷打印
+```
+
+ 数组遍历
+
+```kotlin
+val e = floatArrayOf(1f, 2f, 3f)
+for(element in e) {
+        println(element)
+}
+e.forEach { element -> println(element) }
+e.forEach { println(it) }
+
+if( 1f in e ) { 
+  // ...
+}
+```
+
+
 
 ## 函数
 
@@ -28,9 +63,9 @@ fun largerNumber(num1: Int, num2: Int): Int = max(num1, num2)
 
 ## 程序的逻辑控制
 
-### if条件语句
+### if 条件语句
 
-Kotlin里的if语句相对于java中的有一个额外的功能，它是可以有返回值的。
+Kotlin 里的 if 语句相对于 java 中的有一个额外的功能，它是可以有返回值的。
 
 ```kotlin
 fun largerNumber(num1: Int, num2: Int): Int {
@@ -44,7 +79,7 @@ fun largerNumber(num1: Int, num2: Int): Int {
 
 ### when 条件语句
 
-when有点类似于java里的switch，但是又远比switch强大的多。
+when 有点类似于 java 里的 switch，但是又远比 switch 强大的多。
 
 ```kotlin
 fun getScore(name: String) = when (name) {
@@ -55,9 +90,9 @@ fun getScore(name: String) = when (name) {
 }
 ```
 
-when语句允许传入一个任意类型的数据，参数，然后再when的结构体中定义一系列的条件，格式为`匹配值 -> { 执行逻辑 }`，逻辑只有一行时，`{}`可以省略。
+when 语句允许传入一个任意类型的数据，参数，然后再 when 的结构体中定义一系列的条件，格式为`匹配值 -> { 执行逻辑 }`，逻辑只有一行时，`{}`可以省略。
 
-除了进行精准匹配，when还可以进行类型匹配。
+除了进行精准匹配，when 还可以进行类型匹配。
 
 ```kotlin
 fun checkNum(num: Number) {
@@ -69,9 +104,9 @@ fun checkNum(num: Number) {
 }
 ```
 
-is相当于java中的instanceof关键字。Number是kotlin里的一个抽象类，Int、Double、Long等都是它的子类。
+is 相当于 java 中的 instanceof 关键字。Number 是 kotlin 里的一个抽象类，Int、Double、Long 等都是它的子类。
 
-when还有一种不带参数的用法。
+when 还有一种不带参数的用法。
 
 ```kotlin
 fun getScore(name: String) = when {
@@ -84,12 +119,14 @@ fun getScore(name: String) = when {
 
 ## 循环
 
-在kotlin中表示一个区间
+在 kotlin 中表示一个区间
 
 双端闭区间
 
 ```kotlin
 val range = 0..10
+val charRange = 'a'..'z'
+val longRange = 1L..100L // 连续区间
 ```
 
 单端闭区间
@@ -104,7 +141,7 @@ var range = 0 util 10
 var range = 10 downTo 1
 ```
 
-基本for-in循环的使用
+基本 for-in 循环的使用
 
 ```kotlin
 fun main(args: Array<String>) {
@@ -125,7 +162,7 @@ fun main(args: Array<String>) {
 class Person {
   var name = ""
   var age = 0
-  
+
   fun eat() {
     println(name + " is eating. He is " + age + " years old.")
   }
@@ -141,7 +178,7 @@ fun main() {
 
 ### 继承
 
-默认所有的非抽象类都是不可继承的。抽象类本身是无法创建实例的，一定要子类去继承它才能创建实例，因此抽象类必须被继承才行，不然就没有意义。通过给Person添加`open`关键词，才可以被继承。
+默认所有的非抽象类都是不可继承的。抽象类本身是无法创建实例的，一定要子类去继承它才能创建实例，因此抽象类必须被继承才行，不然就没有意义。通过给 Person 添加`open`关键词，才可以被继承。
 
 ```kotlin
 open class Person {
@@ -149,7 +186,7 @@ open class Person {
 }
 ```
 
-让Student类继承Person类
+让 Student 类继承 Person 类
 
 ```kotlin
 class Student : Person() {
@@ -160,13 +197,13 @@ class Student : Person() {
 
 ### 构造函数
 
-kotlin里的构造函数分为两种：主构造函数和次构造函数。
+kotlin 里的构造函数分为两种：主构造函数和次构造函数。
 
 主构造函数就是最常用的构造函数，每个类默认都有一个不带参数的主构造函数，当然也可以显示的给它指明参数。主构造函数没有函数体，直接定义在类名后面即可。
 
 ```kotlin
 class Student(val sno: String, val grade: Int) : Person() {
-  
+
 }
 
 val student = Student("a123", 5)
@@ -185,7 +222,7 @@ class Student(val sno: String, val grade: Int) : Person() {
 
 根据继承特性的规定，子类的构造函数必须调用父类的构造函数，子类的主构造函数调用父类中的哪个构造函数，在继承的时候通过括号指定。
 
-次构造函数是通过constructor关键词定义，它是有函数体的。当一个类既有主构造函数又有次构造函数的时候，所有的次构造函数都必须调用主构造函数（包括间接调用）。
+次构造函数是通过 constructor 关键词定义，它是有函数体的。当一个类既有主构造函数又有次构造函数的时候，所有的次构造函数都必须调用主构造函数（包括间接调用）。
 
 ```kotlin
 class Student(val sno: String, val grade: Int, name: String, age: Int) : Person(name, age) {
@@ -196,12 +233,12 @@ class Student(val sno: String, val grade: Int, name: String, age: Int) : Person(
 
 ### 接口
 
-kotlin允许在接口中定义的函数里进行默认实现，jdk1.8之后也开始支持这个功能了。
+kotlin 允许在接口中定义的函数里进行默认实现，jdk1.8 之后也开始支持这个功能了。
 
 ```kotlin
 interface Study {
   fun readBooks()
-  
+
   fun doHomeWork() {
     println("do homework default")
   }
@@ -222,7 +259,7 @@ class Student(name: String, age: Int): Person(name, age), Study {
 data class Cellphone(val brand: String, val price: Double)
 ```
 
-添加`data`关键字之后，kotlin会根据主构造函数中的参数帮我们将`equals()`、`hashCode()`、`toString()`等固定方法自动生成。
+添加`data`关键字之后，kotlin 会根据主构造函数中的参数帮我们将`equals()`、`hashCode()`、`toString()`等固定方法自动生成。
 
 创建单例类
 
@@ -230,9 +267,9 @@ data class Cellphone(val brand: String, val price: Double)
 object Singleton {}
 ```
 
-只需要把class关键字换成object就可以创建一个单例类
+只需要把 class 关键字换成 object 就可以创建一个单例类
 
-### lambda编程
+### lambda 编程
 
 初始化集合
 
@@ -243,9 +280,9 @@ for( fruit in list) {
 }
 ```
 
-`listOf()`函数创建的集合是不可变的，也就是它只能用于读取操作。如果想创建可变集合，可以使用`mutableListOf()`函数。set的基本使用和list相似。
+`listOf()`函数创建的集合是不可变的，也就是它只能用于读取操作。如果想创建可变集合，可以使用`mutableListOf()`函数。set 的基本使用和 list 相似。
 
-map的基本使用
+map 的基本使用
 
 ```kotlin
 val map = mapOf("Apple" to 1, "Orange" to 2)
@@ -254,7 +291,7 @@ for((fruit, number) in map) {
 }
 ```
 
-#### 集合的函数式API
+#### 集合的函数式 API
 
 ```kotlin
 val list = listOf("Apple", "orange", "Pear", "Grape")
@@ -262,29 +299,28 @@ val maxLengthFruit = list.maxByOrNull { it.length }
 println(maxLengthFruit)
 ```
 
-lambda表达式结构
+lambda 表达式结构
 
-> {参数名1: 参数类型, 参数名2: 参数类型 -> 函数体 }
+> {参数名 1: 参数类型, 参数名 2: 参数类型 -> 函数体 }
 
 ```kotlin
 val maxLengthFruit = list.maxBy({ fruit: String -> fruit.length })
 ```
 
-然后Kotlin规定，当Lambda参数是函数的最后一个参数时，可以将Lambda表达式移到函数括 号的外面，如下所示:
+然后 Kotlin 规定，当 Lambda 参数是函数的最后一个参数时，可以将 Lambda 表达式移到函数括 号的外面，如下所示:
 
 ```kotlin
 val maxLengthFruit = list.maxBy() { fruit: String -> fruit.length }
 ```
 
-接下来，如果Lambda参数是函数的唯一一个参数的话，还可以将函数的括号省略:
+接下来，如果 Lambda 参数是函数的唯一一个参数的话，还可以将函数的括号省略:
 
 ```kotlin
 val maxLengthFruit = list.maxBy { fruit: String -> fruit.length }
 ```
 
-当Lambda表达式的参数列表中只有一个参数时，也不必声明参数名，而是可以使用it 关键字来代替，那么代码就变成了:
+当 Lambda 表达式的参数列表中只有一个参数时，也不必声明参数名，而是可以使用 it 关键字来代替，那么代码就变成了:
 
 ```kotlin
 val maxLengthFruit = list.maxBy { it.length }
 ```
-
