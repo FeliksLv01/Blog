@@ -51,6 +51,51 @@ if( 1f in e ) {
 }
 ```
 
+## 集合框架
+
+集合实现类复用与类型别名
+
+```kotlin
+typealias ArrayList<E> = java.util.ArrayList<E>
+typealias LinkedHashMap<K, V> = java.util.LinkedHashMap<K, V>
+typealias HashMap<K, V> = java.util.HashMap<K, V>
+typealias LinkedHashSet<E> = java.util.LinkedHashSet<E>
+typealias HashSet<E> = java.util.HashSet<E>
+```
+
+集合修改
+
+```kotlin
+for(i in 0..10) {
+    stringList += "num:$i"
+    stringList1 -= "num:$i"
+}
+stringList[5] = "Hello"
+
+val map = HashMap<String, Int>()
+map["Hello"] = 10
+```
+
+Pair
+
+```kotlin
+val pair = "Hello" to "Kotlin"
+val pair2 = Pair("Hello", "Kotlin")
+val first = pair.first
+val second = pair.second
+val (x,y) = pair // 解构赋值
+```
+
+Triple
+
+```kotlin
+val triple = Triple("x", 2, 3.0)
+val first = triple.first
+val second = triple.second
+vail third = triple.third
+val(x, y, z) = triple
+```
+
 
 
 ## 函数
@@ -60,6 +105,41 @@ if( 1f in e ) {
 ```kotlin
 fun largerNumber(num1: Int, num2: Int): Int = max(num1, num2)
 ```
+
+函数类型
+
+```kotlin
+fun foo(){}  // () -> Unit
+fun foo(p0:Int): String {}   // (Int) -> String
+
+// Foo 是 bar方法的receiver
+class Foo {
+    fun bar(p0: String, p1: Long): Any{}   // Foo.(Stirng, Long) -> Any
+}									   //  (Foo, String, Long) -> Any
+```
+
+函数引用
+
+函数引用类似于C语言中的函数指针，可用于函数传递
+
+```kotlin
+fun foo() {}			// ::foo  val f:()-> Unit = :for
+fun foo(p0:Int): String {}	// ::foo val g: (Int) -> String = :foo
+
+class Foo {
+    fun bar(p0: String, p1: Long): Any{} // Foo::bar val h: (Foo, String, Long)-> Any = Foo::bar
+}
+```
+
+默认参数
+
+```kotlin
+fun defaultParameter(x:Int, y:String, z:Long = 0L) {
+    // TODO()
+}
+```
+
+
 
 ## 程序的逻辑控制
 
@@ -141,6 +221,19 @@ var range = 0 util 10
 var range = 10 downTo 1
 ```
 
+区间的应用
+
+```kotlin
+val array = intArrayOf(1, 3, 5, 7)
+for(i in 0 until array.size) {
+    println(array[i])
+}
+// indices返回[0, array.size)
+for(i in array.indices) {
+    println(array[i])
+}
+```
+
 基本 for-in 循环的使用
 
 ```kotlin
@@ -148,10 +241,25 @@ fun main(args: Array<String>) {
     for (i in 0..10) {
         println(i)
     }
-		for (i in 0 util 10 step 2){
+	for (i in 0 util 10 step 2) {
       	println(i)
     }
 }
+```
+
+## 中缀表达式
+
+```kotlin
+infix fun String.rotate(count: Int): String {
+    val index = count % length
+    return this.substring(index) + this.substring(0, index)
+}
+```
+
+加上`infix`关键词之后，可以通过以下方式调用`rotate`函数
+
+```kotlin
+println("HelloWorld" rotate 5)
 ```
 
 ## 面向对象编程
@@ -159,6 +267,7 @@ fun main(args: Array<String>) {
 ### 类与对象
 
 ```kotlin
+// 默认都是public
 class Person {
   var name = ""
   var age = 0
@@ -175,6 +284,19 @@ fun main() {
   p.eat()
 }
 ```
+
+构造方法
+
+```kotlin
+class SimpleClass {
+    var x:Int
+    constructor(x:Int) {
+        this.x = x
+    }
+}
+```
+
+
 
 ### 继承
 
@@ -324,3 +446,31 @@ val maxLengthFruit = list.maxBy { fruit: String -> fruit.length }
 ```kotlin
 val maxLengthFruit = list.maxBy { it.length }
 ```
+
+## 高阶函数
+
+参数类型包含函数类型或返回值类型为函数类型的函数为高阶函数
+
+接收函数类型
+
+```kotlin
+fun cost(block: () -> Unit) {
+    val start = System.currentTimeMillis()
+    block()
+    println(System.currentTimeMillis() - start)
+}
+
+fun main() {
+    cost{
+        for (i in 0..10) {
+            println(i)
+        }
+    }
+}
+```
+
+返回函数类型
+
+```kotlin
+```
+
