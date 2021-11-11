@@ -185,6 +185,20 @@ class MyComponent extends Component<{}, IMyComponentState> {
 - 组件自定义方法中的 this 为 undefined，可以通过强制绑定 this（使用函数对象的 bind 方法）或者使用箭头函数来解决
 - 状态数据不能直接修改或赋值
 
+**setState**
+
+```js
+this.setState({comment: 'Hello'});
+// 不可以直接使用state对象属性进行更改
+
+// 依赖state和props进行更新时，不能给setState传入对象参数，应该传入函数
+this.setState((state, props) => ({
+  counter: state.counter + props.increment
+}));
+```
+
+
+
 ### 展开运算符
 
 ```js
