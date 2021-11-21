@@ -16,3 +16,7 @@ publish: false
 - 2020 年 7 月加入 Token 团队，负责新掌理 Android 端的开发
 
 主要学习方向：Flutter、Vue、SpringBoot、单片机
+
+## 工作经历
+
+- 2021 年 7 月 - 2021 年 11 月 腾讯客户端开发实习生
