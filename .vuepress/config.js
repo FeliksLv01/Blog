@@ -79,6 +79,12 @@ module.exports = {
     lineNumbers: true
   },
   plugins: [
-    '@maginapp/vuepress-plugin-katex'
+    ['@maginapp/vuepress-plugin-katex'],
+    ["vuepress-plugin-nuggets-style-copy", {
+      copyText: "复制代码",
+      tip: {
+        content: "复制成功!"
+      }
+    }]
   ]
 }

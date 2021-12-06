@@ -1,7 +1,6 @@
 ---
 title: Swift笔记
 date: 2021-10-31
-publish: false
 sidebar: 'auto'
 categories:
   - 客户端
@@ -339,7 +338,7 @@ for index in arrayLet2.indices {
 }
 ```
 
- 排序
+排序
 
 ```swift
 var arraySort = [1, 3, 5, 6, 7]
@@ -482,6 +481,131 @@ let airportNames = [String](airports.values)
 // airportNames is ["Toronto Pearson", "London Heathrow"]
 ```
 
+## 控制流
+
+### repeat-while
+
+```swift
+repeat {
+    statements
+} while condition
+```
+
+### switch
+
+swift 的 switch 没有显示的贯穿，默认不需要给 case 后面添加 break
+
+符合情况可以用`,`分隔
+
+```swift
+let anotherCharacter: Character = "a"
+switch anotherCharacter {
+case "a", "A":
+    print("The letter A")
+default:
+    print("Not the letter A")
+}
+```
+
+**区间匹配**
+
+```swift
+let approximateCount = 62
+let countedThings = "moons orbiting Saturn"
+var naturalCount: String
+switch approximateCount {
+case 0:
+    naturalCount = "no"
+case 1..<5:
+    naturalCount = "a few"
+case 5..<12:
+    naturalCount = "several"
+case 12..<100:
+    naturalCount = "dozens of"
+case 100..<1000:
+    naturalCount = "hundreds of"
+default:
+    naturalCount = "many"
+}
+```
+
+**匹配元组**
+
+```swift
+let somePoint = (1, 1)
+switch somePoint {
+case (0, 0):
+    print("(0, 0) is at the origin")
+case (_, 0):
+    print("(\(somePoint.0), 0) is on the x-axis")
+case (0, _):
+    print("(0, \(somePoint.1)) is on the y-axis")
+case (-2...2, -2...2):
+    print("(\(somePoint.0), \(somePoint.1)) is inside the box")
+default:
+    print("(\(somePoint.0), \(somePoint.1)) is outside of the box")
+}
+```
+
+**值绑定**
+
+```swift
+let anotherPoint = (2, 0)
+switch anotherPoint {
+case (let x, 0):
+    print("on the x-axis with an x value of \(x)")
+case (0, let y):
+    print("on the y-axis with a y value of \(y)")
+case let (x, y):
+    print("somewhere else at (\(x), \(y))")
+}
+```
+
+**where**
+
+switch 情况可以使用 where 分句来检查额外的情况。
+
+```swift
+let yetAnotherPoint = (1, -1)
+switch yetAnotherPoint {
+case let (x, y) where x == y:
+    print("(\(x), \(y)) is on the line x == y")
+case let (x, y) where x == -y:
+    print("(\(x), \(y)) is on the line x == -y")
+case let (x, y):
+    print("(\(x), \(y)) is just some arbitrary point")
+}
+// prints "(1, -1) is on the line x == -y"
+```
+
+### 提前退出
+
+guard 语句，类似于 if 语句，基于布尔值表达式来执行语句。使用 guard 语句来要求一个条件必须是真才能执行 guard 之后的语句。与 if 语句不同， guard 语句总是有一个 else 分句—— else 分句里的代码会在条件不为真的时候执行。
+
+```swift
+func greet(person: [String: String]) {
+    guard let name = person["name"] else {
+        return
+    }
+
+    print("Hello \(name)!")
+
+    guard let location = person["location"] else {
+        print("I hope the weather is nice near you.")
+        return
+    }
+
+    print("I hope the weather is nice in \(location).")
+}
+
+greet(person: ["name": "John"])
+// Prints "Hello John!"
+// Prints "I hope the weather is nice near you."
+greet(person: ["name": "Jane", "location": "Cupertino"])
+// Prints "Hello Jane!"
+// Prints "I hope the weather is nice in Cupertino."
+```
+
 ## 闭包
 
 *闭包*是可以在你的代码中被传递和引用的功能性独立代码块。闭包能够捕获和存储定义在其上下文中的任何常量和变量的引用，这也就是所谓的*闭合*并包裹那些常量和变量，因此被称为“闭包”，Swift 能够为你处理所有关于捕获的内存管理的操作。
@@ -500,3 +624,4 @@ let airportNames = [String](airports.values)
 
 **自动闭包**
 
+自动闭包是一种自动创建的用来把作为实际参数传递给函数的表达式打包的闭包。它不接受任何实际参数，并且当它被调用时，它会返回内部打包的表达式的值。这个语法的好处在于通过写普通表达式代替显式闭包而使你省略包围函数形式参数的括号。
