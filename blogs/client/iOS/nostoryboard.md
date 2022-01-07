@@ -9,7 +9,7 @@ tags:
 
 Xcode 13.1
 
-首先将Main.Storyboard Move To Trash
+首先将 Main.Storyboard Move To Trash
 
 ## info.plist
 
@@ -17,11 +17,13 @@ Xcode 13.1
 
 ## General
 
-点击侧边的项目名称，进入`General`，将Deployment Info里的Main Interface改成Launch
+点击侧边的项目名称，进入`General`，将 Deployment Info 里的 Main Interface 改成 Launch
 
 ## 代码设置
 
 ### AppDelegate
+
+**在 iOS13 之后，引入了 SceneDelegate，因此不再需要在 AppDelegate 里进行设置**
 
 ```swift
 var window: UIWindow?
@@ -56,7 +58,7 @@ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options conn
 
 ### 测试
 
-LaunchScreen之后自动进入ViewController
+LaunchScreen 之后自动进入 ViewController
 
 ```swift
 import UIKit
