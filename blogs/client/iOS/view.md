@@ -1,6 +1,7 @@
 ---
 title: UIKit入门笔记
 date: 2021-11-17
+sidebar: "auto"
 categories:
   - 客户端
 tags:
