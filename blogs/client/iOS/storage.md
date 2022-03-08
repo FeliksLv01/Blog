@@ -135,7 +135,11 @@ FileManager.default.copyItem(atPath: oldPath, toPath: newPath)
 FileManager.default.attributesOfItem(atPath: filePath)
 ```
 
-## FileHandler
+## FileHandle
+
+- 读取⽂文件 & 写⽂文件
+- 读取指定的⻓长度 & 在指定位置追加/截断 截断 & ⽴立即刷新
+- 常⽤用于追加数据
 
 ```swift
 let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] + "test.txt"
@@ -156,6 +160,27 @@ if let content = try? String(contentsOfFile: path, encoding: .utf8) {
 ## NSCoder
 
 - 归档（序列化）& 解归档（反序列化）
-- 提供简单的函数，在Object和二进制数据间进行转换
+- 提供简单的函数，在 Object 和二进制数据间进行转换
 - 抽象类 具体功能需要子类实现
 
+```swift
+class Movie: NSObject, NSCoding {
+    var name: String
+    var category: String
+
+    init(name: String, category: String) {
+        self.name = name
+        self.category = category
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        name = aDecoder.decodeObject(forKey: "name") as! String
+        category = aDecoder.decodeObject(forKey: "category") as! String
+    }
+
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(name, forKey: "name")
+        aCoder.encode(category, forKey: "category")
+    }
+}
+```
