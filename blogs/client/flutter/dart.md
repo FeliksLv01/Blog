@@ -1,6 +1,7 @@
 ---
 title: 让代码更Dart
 date: 2022-03-08
+sidebar: 'auto'
 categories:
   - 客户端
 tags:
