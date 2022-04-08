@@ -23,7 +23,7 @@ Xcode 13.1
 
 ### AppDelegate
 
-**在 iOS13 之后，引入了 SceneDelegate，因此不再需要在 AppDelegate 里进行设置**
+~~在 iOS13 之后，引入了 SceneDelegate，因此不再需要在 AppDelegate 里进行设置~~
 
 ```swift
 var window: UIWindow?
