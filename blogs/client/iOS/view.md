@@ -47,7 +47,7 @@ class ViewController: UIViewController {
 
 在上层的永远是最后添加的 view
 
-**UIView 生命周期**
+### UIView 生命周期
 
 从类初始化之后，会依次经历下面四个过程
 
@@ -66,7 +66,7 @@ class ViewController: UIViewController {
 - 和 App 整体交互，视图的切换
 - 作为⼀个 container 管理多个 Controller 和动画
 
-**UIViewController 的生命周期**
+### UIViewController 的生命周期
 
 选择合适的函数处理不同的业务
 
@@ -505,7 +505,7 @@ class TableViewController: UIViewController {
         title = "Table View"
         // 创建UITableView
         let tableView = UITableView(frame: view.frame, style: .insetGrouped)
-      	// 注册cell
+       // 注册cell
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "table")
         tableView.delegate = self
         tableView.dataSource = self
@@ -524,7 +524,7 @@ extension TableViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      	// 获取cell，这里的cell也可以使用自定义的
+       // 获取cell，这里的cell也可以使用自定义的
         let cell = tableView.dequeueReusableCell(withIdentifier: "table", for:  indexPath)
         cell.textLabel?.text = dataArray[indexPath.section]
         cell.imageView?.image = UIImage(systemName: "gear")
@@ -719,13 +719,13 @@ optional func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) // called
 
 ## WKWebView
 
-**WebKit 框架**
+WebKit 框架:
 
-WebKit 是一个开源的 Web 浏览器引擎。对于 iOS 中的 WebKit.framework 就是在 WebCore、底层桥接、JSCore 引擎等核心模块的基础上，针对 iOS 平台的项目封装。
+>WebKit 是一个开源的 Web 浏览器引擎。对于 iOS 中的 WebKit.framework 就是在 WebCore、底层桥接、JSCore 引擎等核心模块的基础上，针对 iOS 平台的项目封装。
 
-**基本加载**
+基本加载:
 
-通过 configuration 进⾏基本设置，加载 URL & HTML，类⽐之前的 UIKit 提供基础的功能，在 delegate 中处理业务逻辑。configuration 可以实现基本的共享 Cookie 设置，播放视频设置，默认 js 注入等。
+>通过 configuration 进⾏基本设置，加载 URL & HTML，类⽐之前的 UIKit 提供基础的功能，在 delegate 中处理业务逻辑。configuration 可以实现基本的共享 Cookie 设置，播放视频设置，默认 js 注入等。
 
 ```swift
 var webView: WKWebView!
@@ -760,7 +760,7 @@ override func viewDidLoad() {
 
 ## KVO
 
-**观察者模式**
+观察者模式:
 
 - 定义了一种一对多的关系，可以让多个观察者同时监听某一个对象或对象的属性变化
 - 被监听的对象在状态变化时，会通知所有的观察者，使他们能够及时的处理理业务逻辑
