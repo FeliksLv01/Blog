@@ -3,9 +3,9 @@ title: Golang入门笔记
 date: 2021-06-05
 sidebar: 'auto'
 categories:
- - 后端
+  - 后端
 tags:
- - Go
+  - Go
 ---
 
 ## 设置代理
@@ -17,37 +17,37 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 ## 分支和循环
 
-猜数字demo
+猜数字 demo
 
 ```go
 package main
 
 import (
-	"fmt"
-	"math/rand"
-	"time"
+ "fmt"
+ "math/rand"
+ "time"
 )
 
 func main() {
-	var count = rand.Intn(100) + 1
-	var init = 50
-	var min = 1
-	var max = 100
-	for {
-		if init < count {
-			fmt.Printf("%v 太小了\n", init)
-			min = init
-			init += (max - init) / 2
-		} else if init > count {
-			fmt.Printf("%v 太大了\n", init)
-			max = init
-			init -= (init - min) / 2
-		} else {
-			break
-		}
-		time.Sleep(time.Second)
-	}
-	fmt.Printf("%v 猜对了\n", init)
+ var count = rand.Intn(100) + 1
+ var init = 50
+ var min = 1
+ var max = 100
+ for {
+  if init < count {
+   fmt.Printf("%v 太小了\n", init)
+   min = init
+   init += (max - init) / 2
+  } else if init > count {
+   fmt.Printf("%v 太大了\n", init)
+   max = init
+   init -= (init - min) / 2
+  } else {
+   break
+  }
+  time.Sleep(time.Second)
+ }
+ fmt.Printf("%v 猜对了\n", init)
 }
 ```
 
@@ -75,7 +75,7 @@ Go 语言里有两种浮点数类型：
   - 占用 8 字节内存
   - 某些编程语言把这种类型叫做 double（双精度）
 
-- float32 
+- float32
   - 占用 4 字节内存
   - 精度比 float64 低
   - 有时叫做单精度类型
@@ -99,7 +99,7 @@ fmt.Println(number)
 
 - 使用 %b 格式化动词
 
-打印每个bit
+打印每个 bit
 
 ```go
 var green uint8 = 3
@@ -108,9 +108,9 @@ green++
 fmt.Printf("%08b\n", green)
 ```
 
-## big包
+## big 包
 
-- 对于较大的整数（超过1018 ）：big.Int
+- 对于较大的整数（超过 1018 ）：big.Int
 
 - 对于任意精度的浮点类型，big.Float
 
@@ -125,7 +125,7 @@ fmt.Println(distance)
 
 ### 较大值的常量
 
-在Go里面，常量可以是无类型的的（untyped）
+在 Go 里面，常量可以是无类型的的（untyped）
 
 ```go
 const distance = 24000000000000000000000
@@ -136,16 +136,16 @@ const distance = 24000000000000000000000
 - 这意味着：比较大的数值可以直接使用（作为字面值）
 
 - 针对字面值和常量的计算是在编译阶段完成的。
-- Go 的编译器是用 Go 编写的，这种无类型的数值字面值就是由 big 包所支持的。这使你可以操作很大的数（超过18的10¹⁸）
+- Go 的编译器是用 Go 编写的，这种无类型的数值字面值就是由 big 包所支持的。这使你可以操作很大的数（超过 18 的 10¹⁸）
 - 只要能够容纳得下，那么常量就可以赋值给变量。
 
-- 常量和big.Int的值是不能互换的
+- 常量和 big.Int 的值是不能互换的
 
 ## 字符和字符串
 
 ### rune
 
-rune的使用，需要在输出的时候指明是字符型，不然会输出数字。
+rune 的使用，需要在输出的时候指明是字符型，不然会输出数字。
 
 ```go
 var frog rune = 0x1f438
@@ -183,31 +183,31 @@ fmt.Printf("%c\n", c)
 fmt.Println(len(message))
 ```
 
-它返回的是字符串具有的byte数，在对中文等语言字符串计算时是不准确的。可以使用 utf-8 包，它提供可以按 rune 计算字符串长度的方法。
+它返回的是字符串具有的 byte 数，在对中文等语言字符串计算时是不准确的。可以使用 utf-8 包，它提供可以按 rune 计算字符串长度的方法。
 
 ```go
 package main
 
 import (
-	"fmt"
-	"unicode/utf8"
+ "fmt"
+ "unicode/utf8"
 )
 
 func main() {
-	question := "¿Cómo estás?"
-	fmt.Println(len(question), "bytes")
-	fmt.Println(utf8.RuneCountInString(question), " runes")
-	c, size := utf8.DecodeRuneInString(question)
-	fmt.Printf("First rune:%c %v bytes", c, size)
+ question := "¿Cómo estás?"
+ fmt.Println(len(question), "bytes")
+ fmt.Println(utf8.RuneCountInString(question), " runes")
+ c, size := utf8.DecodeRuneInString(question)
+ fmt.Printf("First rune:%c %v bytes", c, size)
 }
 ```
 
-- 使用range关键词，遍历集合
+- 使用 range 关键词，遍历集合
 
 ```go
 question := "¿Cómo estás?"
 for i, c := range question {
-	fmt.Printf("%v %c\n", i, c)
+ fmt.Printf("%v %c\n", i, c)
 }
 ```
 
@@ -215,7 +215,7 @@ for i, c := range question {
 
 整型转字符串
 
-- 使用strconv包中的`Itoa`函数可以解决。
+- 使用 strconv 包中的`Itoa`函数可以解决。
 
 ```go
 countdown := 10
@@ -223,7 +223,7 @@ str := "Launch in " + strconv.Itoa(countdown) + " seconds."
 fmt.Println(str)
 ```
 
-- Sprintf函数
+- Sprintf 函数
 
 ```go
 countdown := 10
@@ -233,7 +233,7 @@ fmt.Println(str)
 
 字符串转数字
 
-可以使用strconv里的`Atoi`函数，由于字符串中可能包含任意字符，或者要转换的数字太大，Atoi函数可能会报错。
+可以使用 strconv 里的`Atoi`函数，由于字符串中可能包含任意字符，或者要转换的数字太大，Atoi 函数可能会报错。
 
 ```go
 countdown, err := strconv.Atoi("10")
@@ -249,14 +249,14 @@ fmt.Println(countdown)
 
 ```go
 func kelvinToCelsius(k float64) float64 {
-	k -= 273.15
-	return k
+ k -= 273.15
+ return k
 }
 
 func main() {
-	kelvin := 294.0
-	celsius := kelvinToCelsius(kelvin)
-	fmt.Println(kelvin, " =====> ", celsius)
+ kelvin := 294.0
+ celsius := kelvinToCelsius(kelvin)
+ fmt.Println(kelvin, " =====> ", celsius)
 }
 ```
 
@@ -279,17 +279,17 @@ type celsius float64
 
 //关键词 接收者   方法名   返回值类型
 func (k kelvin) celsius() celsius {
-	return celsius(k - 273.15)
+ return celsius(k - 273.15)
 }
 
 func main() {
-	var kelvin kelvin = 294.0
-	celsius := kelvin.celsius()
-	fmt.Println(kelvin, " =====> ", celsius)
+ var kelvin kelvin = 294.0
+ celsius := kelvin.celsius()
+ fmt.Println(kelvin, " =====> ", celsius)
 }
 ```
 
-- 可以将方法和同包中的任何类型相关联，但不可以是int、float64等预声明的类型进行关联。
+- 可以将方法和同包中的任何类型相关联，但不可以是 int、float64 等预声明的类型进行关联。
 
 ## 一等函数
 
@@ -299,19 +299,19 @@ func main() {
 type kelvin float64
 
 func fackSensor() kelvin {
-	return kelvin(rand.Intn(151) + 50)
+ return kelvin(rand.Intn(151) + 50)
 }
 
 func realSensor() kelvin {
-	return 0
+ return 0
 }
 
 func main() {
-	sensor := fackSensor
-	fmt.Println(sensor())
+ sensor := fackSensor
+ fmt.Println(sensor())
 
-	sensor = realSensor
-	fmt.Println(sensor())
+ sensor = realSensor
+ fmt.Println(sensor())
 }
 ```
 
@@ -321,40 +321,40 @@ func main() {
 type kelvin float64
 
 func fackSensor() kelvin {
-	return kelvin(rand.Intn(151) + 50)
+ return kelvin(rand.Intn(151) + 50)
 }
 
 func measureTemperature(samples int, sensor func() kelvin) {
-	for i := 0; i < samples; i++ {
-		k := sensor()
-		fmt.Printf("%v Kn\n", k)
-		time.Sleep(time.Second)
-	}
+ for i := 0; i < samples; i++ {
+  k := sensor()
+  fmt.Printf("%v Kn\n", k)
+  time.Sleep(time.Second)
+ }
 }
 
 func main() {
-	measureTemperature(3, fackSensor)
+ measureTemperature(3, fackSensor)
 }
 ```
 
 ### 闭包和匿名函数
 
-- 匿名函数就是没有名字的函数，在Go里面也称作函数字面值。
+- 匿名函数就是没有名字的函数，在 Go 里面也称作函数字面值。
 
 ```go
 var f = func() {
-	fmt.Println("f()")
+ fmt.Println("f()")
 }
 
 func main() {
-	f()
-	test := func() {
-		fmt.Println("test()")
-	}
-	test()
-	func() {
-		fmt.Println("====")
-	}()
+ f()
+ test := func() {
+  fmt.Println("test()")
+ }
+ test()
+ func() {
+  fmt.Println("====")
+ }()
 }
 ```
 
@@ -367,14 +367,14 @@ import "fmt"
 type measure func() string
 
 func test(message string) measure {
-	return func() string {
-		return "I get " + message
-	}
+ return func() string {
+  return "I get " + message
+ }
 }
 
 func main() {
-	f := test("123")
-	fmt.Println(f())
+ f := test("123")
+ fmt.Println(f())
 }
 ```
 
@@ -387,7 +387,7 @@ planets[1] = "Venus"
 planets[2] = "Earth"
 earth := planets[2]
 fmt.Println(earth)
-fmt.Println(len(planets)) 	// 获取数组长度
+fmt.Println(len(planets))  // 获取数组长度
 fmt.Println(planets[3] == "") // true
 ```
 
@@ -397,7 +397,7 @@ fmt.Println(planets[3] == "") // true
 dwarfs := [...]int{0, 1, 2, 4, 5, 6, 42, 51}
 ```
 
-可以在复合字面值中使用`...`作为数组的长度，这样go编译器会为你算出数组的元素数量。
+可以在复合字面值中使用`...`作为数组的长度，这样 go 编译器会为你算出数组的元素数量。
 
 ### 数组复制
 
@@ -448,7 +448,7 @@ sort.IntSlice(planets).Sort()
 fmt.Println(planets)
 ```
 
-使用`append`函数将数据添加到切片中。append函数可以添加多个参数。如果底层数组的容量不够，将会再分配一个数组，slice总容量增加一倍。
+使用`append`函数将数据添加到切片中。append 函数可以添加多个参数。如果底层数组的容量不够，将会再分配一个数组，slice 总容量增加一倍。
 
 ```go
 dwarfs := []string{"Ceres", "Pluto", "Haumea", "Makemake", "Eris"}
@@ -458,11 +458,11 @@ dwarfs = append(dwarfs, "Salacia", "Quaoar", "Sedna")
 fmt.Println(dwarfs)
 ```
 
-使用`len`函数获取切片的长度。切片容量是指slice底层数组的容量，可以使用`cap`函数获取。
+使用`len`函数获取切片的长度。切片容量是指 slice 底层数组的容量，可以使用`cap`函数获取。
 
 ```go
 func dump(label string, slice []string) {
-	fmt.Printf("%v: length %v, capacity %v %v\n", label, len(slice), cap(slice), slice)
+ fmt.Printf("%v: length %v, capacity %v %v\n", label, len(slice), cap(slice), slice)
 
 ```
 
@@ -472,7 +472,7 @@ func dump(label string, slice []string) {
 terrestrial := planets[0:4:4]
 ```
 
-使用`make`函数对slice进行预分配。
+使用`make`函数对 slice 进行预分配。
 
 - 当 slice 的容量不足以执行 append 操作时，Go 必须创建新数组并复制旧数组中的内容。
 
@@ -489,12 +489,12 @@ dwarfs = append(dwarfs, "Ceres", "Pluto", "Haumea", "Makemake", "Eris")
 ```go
 // words类型为切片
 func terraform(prefix string, worlds ...string) []string {
-	newWorlds := make([]string, len(worlds))
+ newWorlds := make([]string, len(worlds))
 
-	for i := range worlds {
-		newWorlds[i] = prefix + " " + worlds[i]
-	}
-	return newWorlds
+ for i := range worlds {
+  newWorlds[i] = prefix + " " + worlds[i]
+ }
+ return newWorlds
 }
 ```
 
@@ -511,8 +511,8 @@ map 是 Go 提供的另外一种集合：
 ```go
 // map[keyType]valueType
 temperature := map[string]int{
-		"Earth": 15,
-		"Mars":  -65,
+  "Earth": 15,
+  "Mars":  -65,
 }
 // 获取value
 temp := temperature["Earth"]
@@ -527,9 +527,9 @@ moon := temperature["Moon"]
 fmt.Println(moon)
 // 通过逗号ok写法来判断是否存在相应的key
 if moon, ok := temperature["Moon"]; ok {
-	fmt.Printf("On average the moon is %vº C.\n", moon)
+ fmt.Printf("On average the moon is %vº C.\n", moon)
 } else {
-	fmt.Println("Where is the moon?")
+ fmt.Println("Where is the moon?")
 }
 // 判断是否存在Earth这个key
 _, ok := temperature["Earth"]
@@ -538,12 +538,12 @@ fmt.Println(ok)
 delete(temperature, "Earth")
 ```
 
-- 数组、int、float64等类型在赋值给新变量或传递至函数/方法的时候会创建相应的副本，但 map 不会
+- 数组、int、float64 等类型在赋值给新变量或传递至函数/方法的时候会创建相应的副本，但 map 不会
 
 ```go
 planets := map[string]string{
-	"Earth": "Sector ZZ9",
-	"Mars":  "Sector ZZ9",
+ "Earth": "Sector ZZ9",
+ "Mars":  "Sector ZZ9",
 }
 
 planetsMarkII := planets
@@ -566,17 +566,17 @@ fmt.Println(planetsMarkII)
 ```go
 // 使用复合字面值进行初始化
 temperatures := []float64{
-	-28.0, 32.0, -31.0, -29.0, -23.0, -29.0, -28.0, -33.0,
+ -28.0, 32.0, -31.0, -29.0, -23.0, -29.0, -28.0, -33.0,
 }
 // 使用make函数进行初始化
 frequency := make(map[float64]int)
 // 使用map进行计数
 for _, t := range temperatures {
-	frequency[t]++
+ frequency[t]++
 }
 // 使用range进行遍历map时，顺序无法保证
 for t, num := range frequency {
-	fmt.Printf("%+.2f occurs %d times\n", t, num)
+ fmt.Printf("%+.2f occurs %d times\n", t, num)
 }
 ```
 
@@ -584,22 +584,22 @@ for t, num := range frequency {
 
 ```go
 func main() {
-	temperatures := []float64{
-		-28.0, 32.0, -31.0, -29.0, -23.0, -29.0, -28.0, -33.0,
-	}
+ temperatures := []float64{
+  -28.0, 32.0, -31.0, -29.0, -23.0, -29.0, -28.0, -33.0,
+ }
 
-	groups := make(map[float64][]float64)
+ groups := make(map[float64][]float64)
 
-	for _, t := range temperatures {
+ for _, t := range temperatures {
         // 跨度为10
-		g := math.Trunc(t/10) * 10
+  g := math.Trunc(t/10) * 10
         // 向slice中添加值
-		groups[g] = append(groups[g], t)
-	}
+  groups[g] = append(groups[g], t)
+ }
 
-	for g, temperatures := range groups {
-		fmt.Printf("%v: %v\n", g, temperatures)
-	}
+ for g, temperatures := range groups {
+  fmt.Printf("%v: %v\n", g, temperatures)
+ }
 }
 ```
 
@@ -609,47 +609,47 @@ Set 这种集合与数组类似，但元素不会重复，Go 语言里没有提�
 
 ```go
 func main() {
-	var temperatures = []float64{
-		-28.0, 32.0, -31.0, -29.0, -23.0, -29.0, -28.0, -33.0,
-	}
+ var temperatures = []float64{
+  -28.0, 32.0, -31.0, -29.0, -23.0, -29.0, -28.0, -33.0,
+ }
 
-	set := make(map[float64]bool)
+ set := make(map[float64]bool)
     // 将温度值作为key
-	for _, t := range temperatures {
-		set[t] = true
-	}
+ for _, t := range temperatures {
+  set[t] = true
+ }
 
-	if set[-28.0] {
-		fmt.Println("set member")
-	}
+ if set[-28.0] {
+  fmt.Println("set member")
+ }
 
-	fmt.Println(set)
+ fmt.Println(set)
     // 创建切片
-	unique := make([]float64, 0, len(set))
+ unique := make([]float64, 0, len(set))
     // 将数据添加到切片中
-	for t := range set {
-		unique = append(unique, t)
-	}
+ for t := range set {
+  unique = append(unique, t)
+ }
     // 排序
-	sort.Float64s(unique)
-	fmt.Println(unique)
+ sort.Float64s(unique)
+ fmt.Println(unique)
 }
 ```
 
-## struct结构体
+## struct 结构体
 
 ```go
 func main() {
-	var curiosity struct {
-		lat  float64
-		long float64
-	}
+ var curiosity struct {
+  lat  float64
+  long float64
+ }
 
-	curiosity.lat = -4.5895
-	curiosity.long = 137.4417
+ curiosity.lat = -4.5895
+ curiosity.long = 137.4417
 
-	fmt.Println(curiosity.lat, curiosity.long)
-	fmt.Println(curiosity)
+ fmt.Println(curiosity.lat, curiosity.long)
+ fmt.Println(curiosity)
 }
 ```
 
@@ -657,7 +657,7 @@ func main() {
 
 ```go
 type location struct {
-	lat, long float64
+ lat, long float64
 }
 // 复合字面值初始化
 opportunity := location{lat: -1.9462, long: 354.4734}
@@ -672,52 +672,52 @@ fmt.Printf("%v\n", curiosity)
 fmt.Printf("%+v\n", curiosity)
 ```
 
-- struct的复制是复制一个新的副本，对其修改不会影响之前的值
+- struct 的复制是复制一个新的副本，对其修改不会影响之前的值
 
-### 由结构体构成slice
+### 由结构体构成 slice
 
 ```go
 type location struct {
-	name string
-	lat  float64
-	long float64
+ name string
+ lat  float64
+ long float64
 }
 // 创建切片
 locations := []location{
-	{name: "Bradbury Landing", lat: -4.5895, long: 137.4417},
-	{name: "Columbia Memorial Station", lat: -14.5684, long: 175.472636},
-	{name: "Challenger Memorial Station", lat: -1.9462, long: 354.4734},
+ {name: "Bradbury Landing", lat: -4.5895, long: 137.4417},
+ {name: "Columbia Memorial Station", lat: -14.5684, long: 175.472636},
+ {name: "Challenger Memorial Station", lat: -1.9462, long: 354.4734},
 }
 ```
 
-### 将结构体编码成json
+### 将结构体编码成 json
 
 ```go
 import (
-	"encoding/json"
-	"fmt"
-	"os"
+ "encoding/json"
+ "fmt"
+ "os"
 )
 
 func main() {
-	type location struct {
+ type location struct {
         // 必须是大写，不然编码后会显示为空
-		Lat, Long float64
-	}
+  Lat, Long float64
+ }
 
-	curiosity := location{-4.5895, 137.4417}
-	// 使用json包的 Marshal 函数将struct转成json
-	bytes, err := json.Marshal(curiosity)
-	exitOnError(err)
-	fmt.Println(string(bytes))
+ curiosity := location{-4.5895, 137.4417}
+ // 使用json包的 Marshal 函数将struct转成json
+ bytes, err := json.Marshal(curiosity)
+ exitOnError(err)
+ fmt.Println(string(bytes))
 }
 
 // exitOnError prints any errors and exits.
 func exitOnError(err error) {
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+ if err != nil {
+  fmt.Println(err)
+  os.Exit(1)
+ }
 }
 ```
 
@@ -725,12 +725,12 @@ Go 语言中的 json 包要求 struct 中的字段必须以大写字母开头，
 
 ```go
 type location struct {
-	Lat  float64 `json:"latitude"`
-	Long float64 `json:"longitude"`
+ Lat  float64 `json:"latitude"`
+ Long float64 `json:"longitude"`
 }
 ```
 
-这样输出时的label就会变成我们设置的latitude和longitude。
+这样输出时的 label 就会变成我们设置的 latitude 和 longitude。
 
 ## 组合和转发
 
@@ -738,17 +738,17 @@ type location struct {
 
 ```go
 type report struct {
-	sol         int
-	temperature temperature
-	location    location
+ sol         int
+ temperature temperature
+ location    location
 }
 
 type temperature struct {
-	high, low celsius
+ high, low celsius
 }
 
 type location struct {
-	lat, long float64
+ lat, long float64
 }
 
 type celsius float64
@@ -761,42 +761,42 @@ Go 可以通过 struct 嵌入 来实现方法的转发。在 struct 中只给定
 
 ```go
 type report struct {
-	sol int
-	temperature
-	location
+ sol int
+ temperature
+ location
 }
 
 type temperature struct {
-	high, low celsius
+ high, low celsius
 }
 
 type location struct {
-	lat, long float64
+ lat, long float64
 }
 
 type celsius float64
 
 func (t temperature) average() celsius {
-	return (t.high + t.low) / 2
+ return (t.high + t.low) / 2
 }
 
 func main() {
-	report := report{
-		sol:         15,
-		location:    location{-4.5895, 137.4417},
-		temperature: temperature{high: -1.0, low: -78.0},
-	}
-	// 转发之后，report可以直接调用average方法
-	fmt.Printf("average %vº C\n", report.average())
+ report := report{
+  sol:         15,
+  location:    location{-4.5895, 137.4417},
+  temperature: temperature{high: -1.0, low: -78.0},
+ }
+ // 转发之后，report可以直接调用average方法
+ fmt.Printf("average %vº C\n", report.average())
     // 虽然没有设置字段名，但是go语言会自动帮我们生成一个和类型名一样的字段名
-	fmt.Printf("average %vº C\n", report.temperature.average())
-	fmt.Printf("%vº C\n", report.high)
-	report.high = 32
-	fmt.Printf("%vº C\n", report.temperature.high)
+ fmt.Printf("average %vº C\n", report.temperature.average())
+ fmt.Printf("%vº C\n", report.high)
+ report.high = 32
+ fmt.Printf("%vº C\n", report.temperature.high)
 }
 ```
 
-`average`是temperature类型的方法，但是通过嵌入，可以实现方法的转发，级report可以直接调用average方法。
+`average`是 temperature 类型的方法，但是通过嵌入，可以实现方法的转发，级 report 可以直接调用 average 方法。
 
 ## 接口
 
@@ -813,8 +813,8 @@ type Tank interface {
 
 C 语言中的内存地址可以通过例如 address++ 这样的指针运算进行操作，但是在 Go 里面不允许这种不安全操作。
 
-- 将 * 放在类型前面表示声明指针类型
-- 将 * 放在变量前面表示解引用操作
+- 将 \* 放在类型前面表示声明指针类型
+- 将 \* 放在变量前面表示解引用操作
 - 两个指针变量持有相同的内存地址，那么它们就是相等的
 
 ### 指向结构体的指针
@@ -823,25 +823,25 @@ C 语言中的内存地址可以通过例如 address++ 这样的指针运算进�
 
 ```go
 func main() {
-	type person struct {
-		name, superpower string
-		age              int
-	}
+ type person struct {
+  name, superpower string
+  age              int
+ }
 
-	timmy := &person{
-		name: "Timothy",
-		age:  10,
-	}
-	timmy.superpower = "flying"
+ timmy := &person{
+  name: "Timothy",
+  age:  10,
+ }
+ timmy.superpower = "flying"
 
-	fmt.Printf("%+v\n", timmy)
+ fmt.Printf("%+v\n", timmy)
 }
 ```
 
 ### 指向数组的指针
 
 - 和结构体一样，可以把 & 放在数组的复合字面值前面来创建指向数组的指针。
-- 数组在执行索引或切片操作时会自动解引用。没有必要写 (*superpower)[0] 这种形式。
+- 数组在执行索引或切片操作时会自动解引用。没有必要写 [\*superpower](0) 这种形式。
 - 与 C 语言不一样，Go 里面数组和指针是两种完全独立的类型。
 - Slice 和 map 的复合字面值前面也可以放置 & 操作符，但是 Go 并没有为它们提供自动解引用的功能。
 
@@ -881,26 +881,26 @@ Go 语言在变量通过点标记法进行调用的时候，自动使用 & 取�
 
 ```go
 type stats struct {
-	level             int
-	endurance, health int
+ level             int
+ endurance, health int
 }
 
 func levelUp(s *stats) {
-	s.level++
-	s.endurance = 42 + (14 * s.level)
-	s.health = 5 * s.endurance
+ s.level++
+ s.endurance = 42 + (14 * s.level)
+ s.health = 5 * s.endurance
 }
 
 func main() {
-	type character struct {
-		name  string
-		stats stats
-	}
+ type character struct {
+  name  string
+  stats stats
+ }
 
-	player := character{name: "Matthias"}
-	levelUp(&player.stats)
+ player := character{name: "Matthias"}
+ levelUp(&player.stats)
 
-	fmt.Printf("%+v\n", player.stats)
+ fmt.Printf("%+v\n", player.stats)
 }
 ```
 
@@ -908,13 +908,13 @@ func main() {
 
 ```go
 func reset(board *[8][8]rune) {
-	board[0][0] = 'r'
+ board[0][0] = 'r'
 }
 
 func main() {
-	var board [8][8]rune
-	reset(&board)
-	fmt.Printf("%c", board[0][0])
+ var board [8][8]rune
+ reset(&board)
+ fmt.Printf("%c", board[0][0])
 }
 ```
 
@@ -937,18 +937,18 @@ func main() {
 
 ```go
 func reclassify(planets *[]string) {
-	*planets = (*planets)[0:8]
+ *planets = (*planets)[0:8]
 }
 
 func main() {
-	planets := []string{
-		"Mercury", "Venus", "Earth", "Mars",
-		"Jupiter", "Saturn", "Uranus", "Neptune",
-		"Pluto",
-	}
-	reclassify(&planets)
+ planets := []string{
+  "Mercury", "Venus", "Earth", "Mars",
+  "Jupiter", "Saturn", "Uranus", "Neptune",
+  "Pluto",
+ }
+ reclassify(&planets)
 
-	fmt.Println(planets)
+ fmt.Println(planets)
 }
 ```
 
@@ -960,26 +960,26 @@ func main() {
 
 ```go
 type stats struct {
-	level             int
-	endurance, health int
+ level             int
+ endurance, health int
 }
 
 func levelUp(s *stats) {
-	s.level++
-	s.endurance = 42 + (14 * s.level)
-	s.health = 5 * s.endurance
+ s.level++
+ s.endurance = 42 + (14 * s.level)
+ s.health = 5 * s.endurance
 }
 
 func main() {
-	type character struct {
-		name  string
-		stats stats
-	}
+ type character struct {
+  name  string
+  stats stats
+ }
 
-	player := character{name: "Matthias"}
-	levelUp(&player.stats)
+ player := character{name: "Matthias"}
+ levelUp(&player.stats)
 
-	fmt.Printf("%+v\n", player.stats)
+ fmt.Printf("%+v\n", player.stats)
 }
 ```
 
@@ -989,21 +989,21 @@ Go 语言允许函数和方法同时返回多个值，按照惯例，函数在�
 
 ```go
 import (
-	"fmt"
-	"io/ioutil"
-	"os"
+ "fmt"
+ "io/ioutil"
+ "os"
 )
 
 func main() {
-	files, err := ioutil.ReadDir(".")
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+ files, err := ioutil.ReadDir(".")
+ if err != nil {
+  fmt.Println(err)
+  os.Exit(1)
+ }
 
-	for _, file := range files {
-		fmt.Println(file.Name())
-	}
+ for _, file := range files {
+  fmt.Println(file.Name())
+ }
 }
 ```
 
@@ -1016,19 +1016,19 @@ func main() {
 
 ```go
 func proverbs(name string) error {
-	f, err := os.Create(name)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
+ f, err := os.Create(name)
+ if err != nil {
+  return err
+ }
+ defer f.Close()
 
-	_, err = fmt.Fprintln(f, "Errors are values.")
-	if err != nil {
-		return err
-	}
+ _, err = fmt.Fprintln(f, "Errors are values.")
+ if err != nil {
+  return err
+ }
 
-	_, err = fmt.Fprintln(f, "Don’t just check errors, handle them gracefully.")
-	return err
+ _, err = fmt.Fprintln(f, "Don’t just check errors, handle them gracefully.")
+ return err
 }
 ```
 
@@ -1038,20 +1038,20 @@ func proverbs(name string) error {
 
 ```go
 import (
-	"fmt"
-	"time"
+ "fmt"
+ "time"
 )
 
 func main() {
-	for i := 0; i < 5; i++ {
-		go sleepyGopher()
-	}
-	time.Sleep(4 * time.Second)
+ for i := 0; i < 5; i++ {
+  go sleepyGopher()
+ }
+ time.Sleep(4 * time.Second)
 }
 
 func sleepyGopher() {
-	time.Sleep(3 * time.Second)
-	fmt.Println("... snore ...")
+ time.Sleep(3 * time.Second)
+ fmt.Println("... snore ...")
 }
 ```
 
@@ -1059,25 +1059,25 @@ func sleepyGopher() {
 
 ```GO
 func main() {
-	for i := 0; i < 5; i++ {
-		go sleepyGopher(i)
-	}
-	time.Sleep(4 * time.Second)
+ for i := 0; i < 5; i++ {
+  go sleepyGopher(i)
+ }
+ time.Sleep(4 * time.Second)
 }
 
 func sleepyGopher(id int) {
-	time.Sleep(3 * time.Second)
-	fmt.Println("... snore ... ", id)
+ time.Sleep(3 * time.Second)
+ fmt.Println("... snore ... ", id)
 }
 ```
 
 ## channel
 
-- 通道可以在多个goroutine之间安全传值。
+- 通道可以在多个 goroutine 之间安全传值。
 - 通过可以用作变量、函数参数、结构体字段...
 - 创建通道使用`make`函数，并指定其传输数据的类型。
 
-### 通过channel发送、接收
+### 通过 channel 发送、接收
 
 使用左箭头操作符 `<-` 向通道发送值 或 从通道接收值
 
@@ -1091,24 +1091,24 @@ func sleepyGopher(id int) {
 
 - 未在等待通道操作的 goroutine 让然可以继续自由的运行
 
- 执行接收操作的 goroutine 将等待直到另一个 goroutine 尝试向该通道进行发送操作为止。
+执行接收操作的 goroutine 将等待直到另一个 goroutine 尝试向该通道进行发送操作为止。
 
 ```go
 func main() {
-	c := make(chan int)
-	for i := 0; i < 5; i++ {
-		go sleepyGopher(i, c)
-	}
-	for i := 0; i < 5; i++ {
-		gopherID := <-c
-		fmt.Println("gopher ", gopherID, " has finshed...")
-	}
+ c := make(chan int)
+ for i := 0; i < 5; i++ {
+  go sleepyGopher(i, c)
+ }
+ for i := 0; i < 5; i++ {
+  gopherID := <-c
+  fmt.Println("gopher ", gopherID, " has finshed...")
+ }
 }
 
 func sleepyGopher(id int, c chan int) {
-	time.Sleep(3 * time.Second)
-	fmt.Println(" ... ", id)
-	c <- id
+ time.Sleep(3 * time.Second)
+ fmt.Println(" ... ", id)
+ c <- id
 }
 ```
 
@@ -1120,26 +1120,26 @@ select 和 switch 有点像。该语句包含的每个 case 都持有一个通�
 
 ```go
 func main() {
-	c := make(chan int)
-	for i := 0; i < 5; i++ {
-		go sleepyGopher(i, c)
-	}
+ c := make(chan int)
+ for i := 0; i < 5; i++ {
+  go sleepyGopher(i, c)
+ }
   //time.After 函数，返回一个通道，该通道在指定时间后会接收到一个值
   //（发送该值的 goroutine 是 Go 运行时的一部分）
-	timeout := time.After(2 * time.Second)
-	for i := 0; i < 5; i++ {
-		select {
-		case gopherID := <-c:
-			fmt.Println("gopher ", gopherID, " has finished sleeping")
-		case <-timeout:
-			fmt.Println("my patience ran out")
-			return
-		}
-	}
+ timeout := time.After(2 * time.Second)
+ for i := 0; i < 5; i++ {
+  select {
+  case gopherID := <-c:
+   fmt.Println("gopher ", gopherID, " has finished sleeping")
+  case <-timeout:
+   fmt.Println("my patience ran out")
+   return
+  }
+ }
 }
 func sleepyGopher(id int, c chan int) {
-	time.Sleep(time.Duration(rand.Intn(4000)) * time.Millisecond)
-	c <- id
+ time.Sleep(time.Duration(rand.Intn(4000)) * time.Millisecond)
+ c <- id
 }
 ```
 
@@ -1152,38 +1152,38 @@ func sleepyGopher(id int, c chan int) {
 ```go
 // 流水线实例
 func main() {
-	c0 := make(chan string)
-	c1 := make(chan string)
-	go sourceGopher(c0)
-	go filterGopher(c0, c1)
-	printGopher(c1)
+ c0 := make(chan string)
+ c1 := make(chan string)
+ go sourceGopher(c0)
+ go filterGopher(c0, c1)
+ printGopher(c1)
 }
 func sourceGopher(downstream chan string) {
-	for _, v := range []string{"hello world", "a bad apple", "goodbye all"} {
-		downstream <- v
-	}
-	downstream <- ""
+ for _, v := range []string{"hello world", "a bad apple", "goodbye all"} {
+  downstream <- v
+ }
+ downstream <- ""
 }
 func filterGopher(upstream, downstream chan string) {
-	for {
-		item := <-upstream
-		if item == "" {
-			downstream <- ""
-			return
-		}
-		if !strings.Contains(item, "bad") {
-			downstream <- item
-		}
-	}
+ for {
+  item := <-upstream
+  if item == "" {
+   downstream <- ""
+   return
+  }
+  if !strings.Contains(item, "bad") {
+   downstream <- item
+  }
+ }
 }
 func printGopher(upstream chan string) {
-	for {
-		v := <-upstream
-		if v == "" {
-			return
-		}
-		fmt.Println(v)
-	}
+ for {
+  v := <-upstream
+  if v == "" {
+   return
+  }
+  fmt.Println(v)
+ }
 }
 ```
 
@@ -1199,34 +1199,34 @@ v, ok := <- c // 可以得知通道是否被关
 
 ```go
 func main() {
-	c0 := make(chan string)
-	c1 := make(chan string)
-	go sourceGopher(c0)
-	go filterGopher(c0, c1)
-	printGopher(c1)
+ c0 := make(chan string)
+ c1 := make(chan string)
+ go sourceGopher(c0)
+ go filterGopher(c0, c1)
+ printGopher(c1)
 }
 func sourceGopher(downstream chan string) {
-	for _, v := range []string{"hello world", "a bad apple", "goodbye all"} {
-		downstream <- v
-	}
-	close(downstream)
+ for _, v := range []string{"hello world", "a bad apple", "goodbye all"} {
+  downstream <- v
+ }
+ close(downstream)
 }
 func filterGopher(upstream, downstream chan string) {
-	for {
-		item, ok := <-upstream
-		if !ok {
-			close(downstream)
-			return
-		}
-		if !strings.Contains(item, "bad") {
-			downstream <- item
-		}
-	}
+ for {
+  item, ok := <-upstream
+  if !ok {
+   close(downstream)
+   return
+  }
+  if !strings.Contains(item, "bad") {
+   downstream <- item
+  }
+ }
 }
 func printGopher(upstream chan string) {
-	for v := range upstream {
-		fmt.Println(v)
-	}
+ for v := range upstream {
+  fmt.Println(v)
+ }
 }
 ```
 
@@ -1234,29 +1234,29 @@ func printGopher(upstream chan string) {
 
 ```go
 func main() {
-	c0 := make(chan string)
-	c1 := make(chan string)
-	go sourceGopher(c0)
-	go filterGopher(c0, c1)
-	printGopher(c1)
+ c0 := make(chan string)
+ c1 := make(chan string)
+ go sourceGopher(c0)
+ go filterGopher(c0, c1)
+ printGopher(c1)
 }
 func sourceGopher(downstream chan string) {
-	for _, v := range []string{"hello world", "a bad apple", "goodbye all"} {
-		downstream <- v
-	}
-	close(downstream)
+ for _, v := range []string{"hello world", "a bad apple", "goodbye all"} {
+  downstream <- v
+ }
+ close(downstream)
 }
 func filterGopher(upstream, downstream chan string) {
-	for item := range upstream {
-		if !strings.Contains(item, "bad") {
-			downstream <- item
-		}
-	}
-	close(downstream)
+ for item := range upstream {
+  if !strings.Contains(item, "bad") {
+   downstream <- item
+  }
+ }
+ close(downstream)
 }
 func printGopher(upstream chan string) {
-	for v := range upstream {
-		fmt.Println(v)
-	}
+ for v := range upstream {
+  fmt.Println(v)
+ }
 }
 ```

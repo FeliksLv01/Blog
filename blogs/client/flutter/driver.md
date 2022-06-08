@@ -10,7 +10,7 @@ tags:
 
 ## Command
 
-首先我们知道，flutter driver通过与flutter application进行通信，实现对应用的控制。其中最基础的一个概念是`Command`。它定义在`lib/src/common/message.dart`中。
+首先是最基础的一个概念`Command`。它定义在`lib/src/common/message.dart`中。
 
 ```dart
 abstract class Command {
@@ -22,7 +22,7 @@ abstract class Command {
 }
 ```
 
-`timeout`是等待command运行完成的最大等待时间，默认是null，kind用来标记command的类型，而`requiresRootWidgetAttached`表示Command是否需要确保Widget树在运行钱已经初始化完成。
+`timeout`是等待Command运行完成的最大等待时间，默认是null，kind用来标记Command的类型，而`requiresRootWidgetAttached`表示Command是否需要确保Widget树在运行前已经初始化完成。
 
 ## Result
 
@@ -104,7 +104,7 @@ mixin DeserializeFinderFactory {
 }
 ```
 
-此外还有一个`CreateFinderFactory`的mixin，它用于从`SerializableFinder`创建`Finder`。而`Finder`是flutter_test中的一个抽象类。额，那之后再看一下`flutter_test`的源码好了。
+此外还有一个`CreateFinderFactory`的mixin，它用于从`SerializableFinder`创建`Finder`。而`Finder`是flutter_test中的一个抽象类。额，为什么要这样做呢，再往下看看应该就明白了。
 
 ## 常用Command/CommandWithTarget
 
@@ -121,19 +121,19 @@ mixin DeserializeFinderFactory {
 
 ## CommandHandlerFactory
 
-通过浏览command相关的源码，可以看到command只是一个定义，包含了一些属性，以及序列化和反序列化的方法，具体运行的操作，并没有包含其中。实际上运行的具体操作是在`CommandHandlerFactory`这个mixin中定义的。
+通过浏览Command相关的源码，可以看到Command只是一个定义，包含了一些属性，以及序列化和反序列化的方法，具体运行的操作，并没有包含其中。实际上运行的具体操作是在`CommandHandlerFactory`这个mixin中定义的。
 
 可以简单看一下`tap`的实现。
 
 ```dart
-  Future<Result> _tap(Command command, WidgetController prober, CreateFinderFactory finderFactory) async {
-    final Tap tapCommand = command as Tap;
-    final Finder computedFinder = await waitForElement(
-      finderFactory.createFinder(tapCommand.finder).hitTestable(),
-    );
-    await prober.tap(computedFinder);
-    return Result.empty;
-  }
+Future<Result> _tap(Command command, WidgetController prober, CreateFinderFactoryfinderFactory) async {
+  final Tap tapCommand = command as Tap;
+  final Finder computedFinder = await waitForElement(
+    finderFactory.createFinder(tapCommand.finder).hitTestable(),
+  );
+  await prober.tap(computedFinder);
+  return Result.empty;
+}
 ```
 
 通过finderFactory创建`flutter_test`中的Finder，传入waitForElement函数。
@@ -170,7 +170,7 @@ waitForElement函数里面主要调用了_waitUntilFrame方法。
 
 这里通过使用Completer来生成一个Future，当bool闭包返回true将会完成这个Future，否则将会一直递归执行。
 
-这一系列的操作都是为了确保能在当前Widget树中找到对应的控件。最后调用prober的tap方法来实现点击。有个很有意思的地方，我们前面看了flutter_driver里的手势相关的操作，只有tap和scroll，稍微基础一点的长按手势也没有支持，但是实际使用的是`WidgetController`里的tap方法，但是`WidgetController`里是提供了longPress、drag等手势的实现。🤔而Google一下，大多数人都是用scroll来验证longPress。
+这一系列的操作都是为了确保能在当前Widget树中找到对应的控件。最后调用prober的tap方法来实现点击。有个很有意思的地方，我们前面看了flutter_driver里的手势相关的操作，只有tap和scroll，稍微基础一点的长按手势也没有支持，但是实际使用的是`WidgetController`里的tap方法，可`WidgetController`里是提供了longPress、drag等手势的实现。🤔Google一下，大多数人都是用scroll来验证longPress，感觉有一点点怪。此外`WidgetController`是`flutter_test`包的中的类，看来要想知道具体怎么实现模拟点击那些操作，得看看`flutter_test`的源码。模拟长按的测试代码如下：
 
 ```dart
 test('test button longpress', () async {
@@ -183,11 +183,11 @@ test('test button longpress', () async {
 
 ## FlutterDriver
 
-FlutterDriver是一个抽象类，它有两个具体的实现`WebFlutterDriver`和`VMServiceFlutterDriver`。以VMServiceFlutterDriver为例进行分析。
+`FlutterDriver`是一个抽象类，它有两个具体的实现`WebFlutterDriver`和`VMServiceFlutterDriver`。以`VMServiceFlutterDriver`为例进行分析。
 
 ### connectTo
 
-通过创建vmservice client来连接到application。并通过client获取到main isolate。而创建VMService的在`_waitAndConnect`这个方法中。构造函数如下。
+通过创建VmService client来连接到flutter应用。并通过client获取到main isolate。而创建VmService的在`_waitAndConnect`这个方法中。构造函数如下。
 
 ```dart
 VmService VmService(
@@ -203,18 +203,18 @@ VmService VmService(
 
 ```dart
 socket = await WebSocket.connect(webSocketUrl, headers: headers);
-      final StreamController<dynamic> controller = StreamController<dynamic>();
-      final Completer<void> streamClosedCompleter = Completer<void>();
-      socket.listen(
-        (dynamic data) => controller.add(data),
-        onDone: () => streamClosedCompleter.complete(),
-      );
-      final vms.VmService service = vms.VmService(
-        controller.stream,
-        socket.add,
-        disposeHandler: () => socket!.close(),
-        streamClosed: streamClosedCompleter.future
-      );
+final StreamController<dynamic> controller = StreamController<dynamic>();
+final Completer<void> streamClosedCompleter = Completer<void>();
+socket.listen(
+  (dynamic data) => controller.add(data),
+  onDone: () => streamClosedCompleter.complete(),
+);
+final vms.VmService service = vms.VmService(
+  controller.stream,
+  socket.add,
+  disposeHandler: () => socket!.close(),
+  streamClosed: streamClosedCompleter.future
+);
 ```
 
 之后便是通过创建的VMService来发送指令。
@@ -227,7 +227,7 @@ final Future<Map<String, dynamic>> future = _serviceClient.callServiceExtension(
 );
 ```
 
-调用`callServiceExtension`来调用特定服务的协议拓展，传入的args为序列化之后的command信息。在调用这个方法之前，需要先在vmservice中注册相关的服务。这也就是为什么需要在main函数里`enableFlutterDriverExtension()`。
+调用`callServiceExtension`来调用特定服务的协议拓展，传入的args为序列化之后的Command信息。在调用这个方法之前，需要先在vmservice中注册相关的服务。这也就是为什么需要在main函数里`enableFlutterDriverExtension()`。
 
 ### 注册服务
 
@@ -300,24 +300,23 @@ class _DriverBinding extends BindingBase with SchedulerBinding, ServicesBinding,
 那么看代码可能有点迷惑。首先我们从它的父类入手。因为在调用子类的构造函数的时候，会调用父类的构造函数。下面是`BindingBase`的构造函数，里面
 
 ```dart
-  BindingBase() {
-    developer.Timeline.startSync('Framework initialization');
+BindingBase() {
+  developer.Timeline.startSync('Framework initialization');
+  assert(!_debugInitialized);
 
-    assert(!_debugInitialized);
-    initInstances();
-    assert(_debugInitialized);
+  initInstances();
+  assert(_debugInitialized);
+  assert(!_debugServiceExtensionsRegistered);
 
-    assert(!_debugServiceExtensionsRegistered);
-    initServiceExtensions();
-    assert(_debugServiceExtensionsRegistered);
+  initServiceExtensions();
 
-    developer.postEvent('Flutter.FrameworkInitialization', <String, String>{});
-
-    developer.Timeline.finishSync();
-  }
+  assert(_debugServiceExtensionsRegistered);
+  developer.postEvent('Flutter.FrameworkInitialization', <String, String>{});
+  developer.Timeline.finishSync();
+}
 ```
 
-在构造函数中调用了`initServiceExtensions`方法，这对应了_DriverBinding中重写的initServiceExtensions方法。并在此方法中进行服务注册，将FlutterDriverExtension的call方法作为参数传入。在call方法中，根据params中的command信息，调用handleCommand方法进行处理。而handleCommand方法是通过mixin CommandHandlerFactory得到的。通过重写添加了对command的一些判断。
+在构造函数中调用了`initServiceExtensions`方法，这对应了`_DriverBinding`中重写的`initServiceExtensions`方法。并在此方法中进行服务注册，将`FlutterDriverExtension`的call方法作为参数传入。在call方法中，根据params中的Command信息，调用handleCommand方法进行处理。而handleCommand方法是通过混入`CommandHandlerFactory`得到的，并通过重写添加了对command的一些判断。
 
 ```dart
   @override
@@ -337,7 +336,7 @@ class _DriverBinding extends BindingBase with SchedulerBinding, ServicesBinding,
 
 ## 总结一下
 
-最后大概总结一下flutter_driver的原理。首先，在需要进行UI自动化测试的Flutter应用的main函数运行前，先向main isolate中注册我们的服务，也就是`FlutterDriverExtension`中的call方法，用于处理command。然后是通过websocket，创建vmservice的client，连接到我们的flutter应用。之后就是通过这个client来调用服务拓展，将command传递过去。具体的操作都是flutter 应用结合flutter_test包来完成的。
+最后大概总结一下flutter_driver的原理。首先，在需要进行UI自动化测试的Flutter应用的main函数运行前，先向main isolate中注册我们的服务，也就是`FlutterDriverExtension`中的call方法，用于处理Command。然后是通过websocket，创建vmservice的client，连接到我们的flutter应用。之后就是通过这个client来调用服务拓展，将Command传递过去。具体的操作都是flutter 应用结合flutter_test包来完成的。
 
 ## 参考文章
 
