@@ -1,8 +1,8 @@
 {
   "name": "blog",
   "version": "1.0.0",
-  "author": "kcqnly",
-  "repository": "https://github.com/kcqnly/Blog",
+  "author": "felikslv",
+  "repository": "https://github.com/felikslv01/Blog",
   "license": "MIT",
   "scripts": {
     "dev": "vuepress dev . --open --host \"localhost\"",
