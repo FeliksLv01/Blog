@@ -1,5 +1,5 @@
 module.exports = {
-  title: "Felikslv的博客",
+  title: "FeliksLv的博客",
   description: "记录学习过程，分享生活琐碎。",
   dest: "public",
   locales: {
@@ -71,7 +71,7 @@ module.exports = {
     search: true,
     searchMaxSuggestions: 10,
     lastUpdated: "Last Updated",
-    author: "Felikslv",
+    author: "FeliksLv",
     authorAvatar: "/avatar.png",
     startYear: "2019"
   },
