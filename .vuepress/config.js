@@ -80,11 +80,11 @@ module.exports = {
   },
   plugins: [
     ['@maginapp/vuepress-plugin-katex'],
-    // ["vuepress-plugin-nuggets-style-copy", {
-    //   copyText: "复制代码",
-    //   tip: {
-    //     content: "复制成功!"
-    //   }
-    // }]
+    ['vuepress-plugin-code-copy', {
+      successText: "复制成功",
+      align: 'top',
+      color: '#666666',
+      backgroundTransition: false
+    }]
   ]
 }
