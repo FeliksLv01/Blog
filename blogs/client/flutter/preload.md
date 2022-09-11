@@ -1,16 +1,16 @@
 ---
 title: Flutter图片预加载
 date: 2020-07-20
+publish: false
 categories:
- - 客户端
+  - 客户端
 tags:
- - flutter
+  - flutter
 ---
-
 
 ## 问题
 
-我们在给页面添加背景图片的时候，一般是用这样的一个Container，之后使用Stack堆叠布局或者，直接在Container中添加child。
+我们在给页面添加背景图片的时候，一般是用这样的一个 Container，之后使用 Stack 堆叠布局或者，直接在 Container 中添加 child。
 
 ```dart
   Container(
@@ -82,7 +82,7 @@ ImageProvider imageProvider = AssetImage("path");
 
 ### 注意事项
 
-但是并不是这样就ok了，通过查询stackoverflow，我了解到，当预加载执行之后，又加载了其他的图片，那么预加载将会失效。所以说，最好的方式就是在前一个页面中的`didChangeDependencies`方法中使用`precacheImage`方法，这样预加载就能顺序进行。
+但是并不是这样就 ok 了，通过查询 stackoverflow，我了解到，当预加载执行之后，又加载了其他的图片，那么预加载将会失效。所以说，最好的方式就是在前一个页面中的`didChangeDependencies`方法中使用`precacheImage`方法，这样预加载就能顺序进行。
 
 ## 清除缓存
 

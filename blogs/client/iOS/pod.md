@@ -107,3 +107,18 @@ pod trunk push FLSwiftyFoundation.podspec --allow-warnings
 4. git tag 打标签
 5. git push --tags
 6. 推送到 pod
+
+## 删除指定版本
+
+本地删除
+
+```shell
+git tag -d '0.0.4'
+git push --tags
+```
+
+pod 删除
+
+```shell
+pod trunk delete FLSwiftyFoundation 0.0.4
+```
