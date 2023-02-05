@@ -122,3 +122,62 @@ pod 删除
 ```shell
 pod trunk delete FLSwiftyFoundation 0.0.4
 ```
+
+## 创建 Pod 私有库
+
+### 创建 Spec Repo
+
+创建远程 Spec Repo，创建完成后需要添加到本地。
+
+```shell
+pod repo add [私有库索引名字] [远程私有索引库地址]
+
+# pod repo add TTSpecs https://gitee.com/tengteng_fan/tt_-spec
+```
+
+查看/移除本地已经关联的 repo
+
+```shell
+pod repo list
+
+pod repo remove SpecName
+```
+
+将本地创建好的 pod 库提交到远程索引库
+
+```shell
+pod repo push [Spec仓库名] [私有库索引文件名(.podspec)]
+```
+
+这个命令有一些参数：
+
+- 忽略警告在后面添加`--verbose --allow-warnings`
+- 如果添加第三方库并包含静态包时需使用`--use-libraries`
+- 采用 CTMediator 组件化时刻，Swift 发布组件需带上`--use-modular-headers`
+
+例如：
+
+```shell
+pod repo push PrivatePod KJCategories.podspec --verbose --allow-warnings --use-libraries --use-modular-headers
+```
+
+Podspec 参数说明：
+
+```shell
+--help      显示指定命令的帮助横幅
+--verbose   显示更多调试信息
+--silent    显示所有信息
+--allow-warnings   忽略警告
+--use-libraries    使用静态库安装
+--use-modular-headers       OC与Swift混编必须添加
+--skip-import-validation    跳过验证pod是否可以导入
+--skip-tests     在验证期间跳过构建和运行测试
+--use-json       在将其推送到repo之前，将podspec转换为JSON
+--swift-version=VERSION     在标记规范时应该使用的SWIFT_VERSION.这优先于规范中指定的Swift版本或. Swift版本文
+```
+
+成功之后更新索引
+
+```shell
+pod setup
+```
