@@ -43,16 +43,17 @@ jobs:
       - name: Build VuePress site
         run: yarn build
 
-      - name: Copy CNAME And Clean
+      - name: Copy CNAME
         run: cp CNAME public/
 
       # 查看 workflow 的文档来获取更多信息
       # @see https://github.com/crazy-max/ghaction-github-pages
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.0.0
+        uses: crazy-max/ghaction-github-pages@v4
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           # 部署到 gh-pages 分支
-          BRANCH: gh-pages
+          target_branch: gh-pages
           # 部署目录为 VuePress 的默认输出目录
-          FOLDER: public
+          build_dir: public
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
