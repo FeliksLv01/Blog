@@ -2,9 +2,9 @@
 title: 创建自己的Pod库
 date: 2022-08-06
 categories:
-  - 客户端
+    - 客户端
 tags:
-  - iOS
+    - iOS
 ---
 
 ## 注册 CocoaPods 账号
@@ -151,9 +151,9 @@ pod repo push [Spec仓库名] [私有库索引文件名(.podspec)]
 
 这个命令有一些参数：
 
-- 忽略警告在后面添加`--verbose --allow-warnings`
-- 如果添加第三方库并包含静态包时需使用`--use-libraries`
-- 采用 CTMediator 组件化时刻，Swift 发布组件需带上`--use-modular-headers`
+-   忽略警告在后面添加`--verbose --allow-warnings`
+-   如果添加第三方库并包含静态包时需使用`--use-libraries`
+-   采用 CTMediator 组件化时刻，Swift 发布组件需带上`--use-modular-headers`
 
 例如：
 
@@ -180,4 +180,10 @@ Podspec 参数说明：
 
 ```shell
 pod setup
+```
+
+### pod 打包静态库
+
+```shell
+pod pack Alamofire.podspec https://xxx --allow-warnings  --use-static-frameworks --skip-validation --generate-module-map
 ```
