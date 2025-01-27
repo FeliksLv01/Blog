@@ -1,5 +1,5 @@
 ---
-title: 使用Build Tool Plugin 做源代码生成
+title: 使用Build Tool Plugin实现Swift源代码生成
 date: 2025-01-27
 categories:
     - 客户端
@@ -31,7 +31,7 @@ class AppDelegate: UIApplicationDelegate {
 }
 ```
 
-这种手动注册的方式容易遗漏。在使用 OC 的时候，很多框架会通过宏定义，将要注册的模块存放到指定的 segment 和 section 中，在启动之后读取来完成注册。在 Swift 为主的工程里，我们可以使用 Build Tool Plugin 来自动生成注册代码，从而避免手动注册的问题。
+这种手动注册的方式容易遗漏。在使用 OC 的时候，很多框架会通过宏定义，将要注册的模块存放到指定的 segment 和 section 中，在启动之后读取来完成注册。而在 Swift 为主的工程里，我们可以使用 Build Tool Plugin 来自动生成注册代码。
 
 ## 创建 Build Tool Plugin
 
