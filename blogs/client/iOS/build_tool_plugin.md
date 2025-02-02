@@ -8,7 +8,7 @@ tags:
     - iOS
 ---
 
-在 [WWDC2022](https://developer.apple.com/videos/play/wwdc2022/110401/) 上，苹果介绍了 Build Tool Plugin 这一功能，它可以在编译时对源代码进行修改，从而生成新的源代码文件。
+在 [WWDC2022](https://developer.apple.com/videos/play/wwdc2022/110401/) 上，苹果介绍了 Build Tool Plugin，可以用来在编译前生成源代码。
 
 这里记录一下使用 Build Tool Plugin 做源代码生成的全过程，实现在编译时自动生成模块注册代码，无需手动注册。
 
