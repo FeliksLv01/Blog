@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Runtime系列1-浅析NSObject对象的Class | FeliksLv的博客</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    <link rel="icon" href="/favicon.png">
+    <meta name="description" content="记录学习过程，分享生活琐碎。">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    
+    <link rel="preload" href="/assets/css/0.styles.9d8bef43.css" as="style"><link rel="preload" href="/assets/js/app.36d0a6ec.js" as="script"><link rel="preload" href="/assets/js/7.d2153018.js" as="script"><link rel="preload" href="/assets/js/2.a0c1b494.js" as="script"><link rel="preload" href="/assets/js/1.7fd99bae.js" as="script"><link rel="preload" href="/assets/js/76.a057f330.js" as="script"><link rel="prefetch" href="/assets/js/10.4aa033e8.js"><link rel="prefetch" href="/assets/js/11.ca92390e.js"><link rel="prefetch" href="/assets/js/14.9702a0eb.js"><link rel="prefetch" href="/assets/js/15.0c98c468.js"><link rel="prefetch" href="/assets/js/16.16732acc.js"><link rel="prefetch" href="/assets/js/17.8978eff3.js"><link rel="prefetch" href="/assets/js/18.4c3efd91.js"><link rel="prefetch" href="/assets/js/19.547b4419.js"><link rel="prefetch" href="/assets/js/20.9985bf84.js"><link rel="prefetch" href="/assets/js/21.544a170a.js"><link rel="prefetch" href="/assets/js/22.6ee7f53e.js"><link rel="prefetch" href="/assets/js/23.a6c4d0fc.js"><link rel="prefetch" href="/assets/js/24.6dfd25a0.js"><link rel="prefetch" href="/assets/js/25.0fb5d5aa.js"><link rel="prefetch" href="/assets/js/26.462eeb79.js"><link rel="prefetch" href="/assets/js/27.5638f16c.js"><link rel="prefetch" href="/assets/js/28.e6801d53.js"><link rel="prefetch" href="/assets/js/29.f988f2e7.js"><link rel="prefetch" href="/assets/js/3.da28cb09.js"><link rel="prefetch" href="/assets/js/30.f11cbb73.js"><link rel="prefetch" href="/assets/js/31.cc2c86c7.js"><link rel="prefetch" href="/assets/js/32.07dce452.js"><link rel="prefetch" href="/assets/js/33.f9350f26.js"><link rel="prefetch" href="/assets/js/34.94b805b1.js"><link rel="prefetch" href="/assets/js/35.63eaeb2a.js"><link rel="prefetch" href="/assets/js/36.13c9aac7.js"><link rel="prefetch" href="/assets/js/37.3ab8e0e8.js"><link rel="prefetch" href="/assets/js/38.ac01c8ad.js"><link rel="prefetch" href="/assets/js/39.d45350dd.js"><link rel="prefetch" href="/assets/js/4.f75cc8bd.js"><link rel="prefetch" href="/assets/js/40.596c6f3c.js"><link rel="prefetch" href="/assets/js/41.a9f0d624.js"><link rel="prefetch" href="/assets/js/42.2acd1912.js"><link rel="prefetch" href="/assets/js/43.94409ad8.js"><link rel="prefetch" href="/assets/js/44.5989b9e4.js"><link rel="prefetch" href="/assets/js/45.c0f2f766.js"><link rel="prefetch" href="/assets/js/46.0ee79938.js"><link rel="prefetch" href="/assets/js/47.2bc37424.js"><link rel="prefetch" href="/assets/js/48.ba467c1a.js"><link rel="prefetch" href="/assets/js/49.3d4277f2.js"><link rel="prefetch" href="/assets/js/5.6cbc200d.js"><link rel="prefetch" href="/assets/js/50.20032635.js"><link rel="prefetch" href="/assets/js/51.2ff458c9.js"><link rel="prefetch" href="/assets/js/52.f65235b3.js"><link rel="prefetch" href="/assets/js/53.511001a5.js"><link rel="prefetch" href="/assets/js/54.5a54110d.js"><link rel="prefetch" href="/assets/js/55.eca851a2.js"><link rel="prefetch" href="/assets/js/56.76dadab3.js"><link rel="prefetch" href="/assets/js/57.475b0e6b.js"><link rel="prefetch" href="/assets/js/58.379be62e.js"><link rel="prefetch" href="/assets/js/59.497fc999.js"><link rel="prefetch" href="/assets/js/6.0157176f.js"><link rel="prefetch" href="/assets/js/60.38439091.js"><link rel="prefetch" href="/assets/js/61.fcabd0b8.js"><link rel="prefetch" href="/assets/js/62.e15c7782.js"><link rel="prefetch" href="/assets/js/63.0844bd92.js"><link rel="prefetch" href="/assets/js/64.739dfc0c.js"><link rel="prefetch" href="/assets/js/65.6ce9d827.js"><link rel="prefetch" href="/assets/js/66.16279015.js"><link rel="prefetch" href="/assets/js/67.05311991.js"><link rel="prefetch" href="/assets/js/68.ac09eb5e.js"><link rel="prefetch" href="/assets/js/69.54acfcde.js"><link rel="prefetch" href="/assets/js/70.b2b6ebaa.js"><link rel="prefetch" href="/assets/js/71.ead4c494.js"><link rel="prefetch" href="/assets/js/72.0baa9dfd.js"><link rel="prefetch" href="/assets/js/73.3883bd1a.js"><link rel="prefetch" href="/assets/js/74.0bbfaee7.js"><link rel="prefetch" href="/assets/js/75.4b05309e.js"><link rel="prefetch" href="/assets/js/77.51314d49.js"><link rel="prefetch" href="/assets/js/78.72e746d7.js"><link rel="prefetch" href="/assets/js/79.c7b2373f.js"><link rel="prefetch" href="/assets/js/8.f4e25b0a.js"><link rel="prefetch" href="/assets/js/80.38a4fcc8.js"><link rel="prefetch" href="/assets/js/81.884264ed.js"><link rel="prefetch" href="/assets/js/82.eb7b93b5.js"><link rel="prefetch" href="/assets/js/83.94253816.js"><link rel="prefetch" href="/assets/js/84.e6377afc.js"><link rel="prefetch" href="/assets/js/85.6eaf784d.js"><link rel="prefetch" href="/assets/js/86.ad1d80de.js"><link rel="prefetch" href="/assets/js/87.fd107e61.js"><link rel="prefetch" href="/assets/js/88.7dad9bd2.js"><link rel="prefetch" href="/assets/js/89.9c55674c.js"><link rel="prefetch" href="/assets/js/9.091eb98d.js"><link rel="prefetch" href="/assets/js/90.cd0d7dea.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.d8eaf4d6.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.9d8bef43.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>FeliksLv的博客</h3> <p class="description" data-v-59e6cb88>记录学习过程，分享生活琐碎。</p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>FeliksLv</span>
+          
+        <span data-v-59e6cb88>2019 - </span>
+        2025
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/logo.png" alt="FeliksLv的博客" class="logo"> <span class="site-name">FeliksLv的博客</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/后端/" class="nav-link"><i class="undefined"></i>
+  后端
+</a></li><li class="dropdown-item"><!----> <a href="/categories/公共基础/" class="nav-link"><i class="undefined"></i>
+  公共基础
+</a></li><li class="dropdown-item"><!----> <a href="/categories/客户端/" class="nav-link"><i class="undefined"></i>
+  客户端
+</a></li><li class="dropdown-item"><!----> <a href="/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间线
+</a></div><div class="nav-item"><a href="/others/about.html" class="nav-link"><i class="iconfont reco-account"></i>
+  关于
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><img src="/avatar.png" alt="author-avatar" class="personal-img" data-v-1fad0c41> <h3 class="name" data-v-1fad0c41>
+    FeliksLv
+  </h3> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>39</h3> <h6 data-v-1fad0c41>文章</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>21</h3> <h6 data-v-1fad0c41>标签</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/后端/" class="nav-link"><i class="undefined"></i>
+  后端
+</a></li><li class="dropdown-item"><!----> <a href="/categories/公共基础/" class="nav-link"><i class="undefined"></i>
+  公共基础
+</a></li><li class="dropdown-item"><!----> <a href="/categories/客户端/" class="nav-link"><i class="undefined"></i>
+  客户端
+</a></li><li class="dropdown-item"><!----> <a href="/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间线
+</a></div><div class="nav-item"><a href="/others/about.html" class="nav-link"><i class="iconfont reco-account"></i>
+  关于
+</a></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>Runtime系列1-浅析NSObject对象的Class</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>FeliksLv</span>
+          
+        <span data-v-59e6cb88>2019 - </span>
+        2025
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page" style="padding-right:0;"><section style="display:;"><div class="page-title"><h1 class="title">Runtime系列1-浅析NSObject对象的Class</h1> <div data-v-8a445198><i class="iconfont reco-account" data-v-8a445198><span data-v-8a445198>FeliksLv</span></i> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>2025/1/5</span></i> <!----> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>Objective-C</span><span class="tag-item" data-v-8a445198>iOS</span></i></div></div> <div class="theme-reco-content content__default"><h2 id="前言"><a href="#前言" class="header-anchor">#</a> 前言</h2> <p>Runtime 作用是什么？最大的作用当然是：<strong>将 Objective-C 对象、方法、协议用 C 语言来解释</strong>因此，笔者打算先简单分享这方面的知识点，更深入的留到后续部分再聊。</p> <p>NSObject 对象是 iOS 开发者都很熟悉的对象，它几乎是所有对象的根类。在任何.m 文件中输入以下代码：</p> <div class="language-nginx line-numbers-mode"><pre class="language-nginx"><code>NSObject
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>点击<code>NSObject</code>跳转到其定义文件，发现如下声明：</p> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code>@interface NSObject <span class="token operator">&lt;</span>NSObject<span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+<span class="token comment">#pragma clang diagnostic push</span>
+<span class="token comment">#pragma clang diagnostic ignored &quot;-Wobjc-interface-ivars&quot;</span>
+    Class isa  OBJC_ISA_AVAILABILITY<span class="token punctuation">;</span>
+<span class="token comment">#pragma clang diagnostic pop</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>其中<code>#pragma clang diagnostic push</code>用于去除警告，因此，我们能发现 NSObject 对象只有一个<code>Class</code>类型的成员变量：<code>isa</code>。<br>
+那么：</p> <ul><li>什么是<code>isa</code></li> <li>什么是<code>Class</code>类型，与<code>class</code> 方法有何区别</li></ul> <p>这篇文章将要给大家揭晓该问题。</p> <h2 id="关于-class"><a href="#关于-class" class="header-anchor">#</a> 关于 Class</h2> <p>我们知道任何一个类都有 <code>class</code>方法比如：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>[NSObject class];
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>当然还有<code>superclass</code>方法：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>[NSObject superclass];
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>更多和 class 相关的方法列举如下：</p> <div class="language-markdown line-numbers-mode"><pre class="language-markdown"><code><span class="token list punctuation">-</span>   (BOOL)isKindOfClass:(Class)aClass;
+<span class="token list punctuation">-</span>   (BOOL)isMemberOfClass:(Class)aClass;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>这两个方法相信大家都不陌生，只不过这两个方法位于<code>@protocol NSObject</code>中，但<code>NSObject</code>中还是有其实现的。所以我们有理由相信，<code>NSObject</code>中的成员变量<code>isa</code>是有特殊含义的，点击改成员变量的类型<code>Class</code>我们可以看到其定义：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>typedef struct objc_class *Class;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>继续点击<code>objc_class</code>：</p> <div class="language-swift line-numbers-mode"><pre class="language-swift"><code><span class="token keyword">struct</span> objc_class <span class="token punctuation">:</span> objc_object <span class="token punctuation">{</span>
+<span class="token comment">//这里省略成员变量以及方法...</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>再次点击<code>objc_object</code>：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>struct objc_object {
+private:
+isa_t isa;
+//这里省略成员变量以及方法...
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>层次有点深，但大家只关注其结构即可：</p> <blockquote><p><code>Class</code>本质是一个结构体。</p></blockquote> <p>画个图总结一下：<br> <img src="https://images.xiaozhuanlan.com/photo/2018/c83aa9f019577a9fef7b3e76f21c09d6.png" alt="NSObject内部类继承图表"></p> <p>NSObject 内部类继承图表</p> <p>关于结构体，大家应该都有所了解，这里再做个复习吧：<br>
+C 语言和 C++ 都支持结构体，只是 C++ 的结构体基本上和类没有区别。以下是摘自知乎某答主：</p> <blockquote><p><strong>结构体和类的区别</strong><br>
+本质上来说结构体与类是同一个东西，可是默认情况下基于可读性的原因还是加一些区分：<br>
+结构体就只含数据成员和构造函数、析构函数，尽可能保持简单。<br>
+类则包含更多的非构造、析构成员函数，概念更大，用来描述普遍意义上的对象类型。</p></blockquote> <p>我们有理由相信：<code>NSObject</code>对象的各个方法，基本上是针对其结构体 isa 对象的操作。这里我们研究几个我们常用的方法：</p> <h2 id="是否同一个类-ismemberofclass"><a href="#是否同一个类-ismemberofclass" class="header-anchor">#</a> 是否同一个类(isMemberOfClass)</h2> <div class="language-php line-numbers-mode"><pre class="language-php"><code><span class="token operator">-</span> <span class="token punctuation">(</span><span class="token keyword type-casting">BOOL</span><span class="token punctuation">)</span>isMemberOfClass<span class="token punctuation">:</span><span class="token punctuation">(</span><span class="token keyword">Class</span><span class="token punctuation">)</span>cls <span class="token punctuation">{</span>
+<span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token keyword">self</span> <span class="token keyword">class</span><span class="token punctuation">]</span> <span class="token operator">==</span> cls<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>很简单，判断一下，当前的 class 方法是否等于参数。<br>
+因为<code>self</code>是<code>NSObjec</code>t 对象，因此我们查看<code>class</code>方法：</p> <div class="language-ruby line-numbers-mode"><pre class="language-ruby"><code><span class="token operator">-</span> <span class="token punctuation">(</span><span class="token builtin">Class</span><span class="token punctuation">)</span><span class="token keyword">class</span> <span class="token punctuation">{</span>
+<span class="token keyword">return</span> object_getClass<span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>其定义如下：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>Class object_getClass(id obj)
+{
+if (obj) return obj-&gt;getIsa();
+else return Nil;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>点击<code>object_getClass</code> 我们可以看到，这个方法位于文件 objc_object.h 中，而且有两个定义：<br> <img src="https://images.xiaozhuanlan.com/photo/2021/bbd3d276a1f499d74f49c0d0980fe613.png" alt="两个 getIsa 方法"></p> <p>两个 getIsa 方法</p> <p>如图我们暂时不看上面那个 getIsa，因为他是支持 Tagged Pointers 的版本，关于 Tagged Pointers 是另外一个主题，我们后面会讲到，现在我们先看不支持 Tagged Pointers 的，也就是如下定义：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>inline Class
+objc_object::getIsa()
+{
+if (!isTaggedPointer()) return ISA();
+uintptr_t ptr = (uintptr_t)this;
+if (isExtTaggedPointer()) {
+uintptr_t slot =
+            (ptr &gt;&gt; _OBJC_TAG_EXT_SLOT_SHIFT) &amp; _OBJC_TAG_EXT_SLOT_MASK;
+return objc_tag_ext_classes[slot];
+    } else {
+uintptr_t slot =
+            (ptr &gt;&gt; _OBJC_TAG_SLOT_SHIFT) &amp; _OBJC_TAG_SLOT_MASK;
+return objc_tag_classes[slot];
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><p>可以发现，越牵扯越深，阅读有点困难了。但大家别着急，我们可以屏蔽</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>if (!isTaggedPointer()) return ISA();
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>以下的代码，因为我们不支持 Tagged Pointer。上面的代码于是可以先简化成：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>inline Class
+objc_object::getIsa()
+{
+if (!isTaggedPointer()) return ISA();
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>所以，我们只需要继续研究<code>ISA()</code>方法：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>inline Class
+objc_object::ISA()
+{
+    assert(!isTaggedPointer());
+#if SUPPORT_INDEXED_ISA
+if (isa.nonpointer) {
+uintptr_t slot = isa.indexcls;
+return classForIndex((unsigned)slot);
+    }
+return (Class)isa.bits;
+#else
+return (Class)(isa.bits &amp; ISA_MASK);
+#endif
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p>同样去掉暂时不需要我们理解的部分，简化代码如下：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>inline Class
+objc_object::ISA()
+{
+return (Class)(isa.bits &amp; ISA_MASK);
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>至此，我们可以看到 class 方法最终获取的即是：结构体<code>objc_object</code>的<code>isa.bits &amp; ISA_MASK</code>的结果。<br>
+那，大家的疑问也会随之而来：</p> <ul><li><code>inline</code> 关键字作用，为何这里的几个方法实现都在<code>.h</code>文件中</li> <li>在方法：<code>objc_object::ISA()</code> 中双冒号的作用。</li> <li><code>objc_object</code> 中的<code>isa</code>又是什么</li> <li><code>isa.bits</code> &amp; <code>ISA_MASK</code> 的含义</li></ul> <h3 id="inline-关键字"><a href="#inline-关键字" class="header-anchor">#</a> inline 关键字</h3> <blockquote><p>用来定义一个类的内联函数，引入它的主要原因是用它替代 C 中表达式形式的宏定义。</p></blockquote> <p>也就是说，用<code>inline</code>关键字修饰的是内联函数，内联函数用于替代宏定义。取代宏定义的原因是：</p> <blockquote><ol><li>C 中使用 define 这种形式宏定义的原因是因为，C 语言是一个效率很高的语言，这种宏定义在形式及使用上像一个函数，但它使用预处理器实现，没有了参数压栈，代码生成等一系列的操作,因此，效率很高，这是它在 C 语言中被使用的一个主要原因。</li> <li>这种宏定义在形式上类似于一个函数，但在使用它时，仅仅只是做预处理器符号表中的简单替换，因此它不能进行参数有效性的检测，也就不能享受 C++ 编译器严格类型检查的好处，另外它的返回值也不能被强制转换为可转换的合适的类型，这样，它的使用就存在着一系列的隐患和局限性。</li> <li>在 C++ 中引入了类及类的访问控制，这样，如果一个操作或者说一个表达式涉及到类的保护成员或私有成员，你就不可能使用这种宏定义来实现(因为无法将 this 指针放在合适的位置)。</li> <li>inline 推出的目的，也正是为了取代这种表达式形式的宏定义，它消除了宏定义的缺点，同时又很好地继承了宏定义的优点。</li></ol></blockquote> <h3 id="双冒号"><a href="#双冒号" class="header-anchor">#</a> 双冒号</h3> <blockquote><p>用于表示“域操作符”，例：声明了一个类 A，类 A 里声明了一个成员函数 void f()，但没有在类的声明里给出 f 的定义，那么在类外定义 f 时，就要写成 void A::f()，表示这个 f()函数是类 A 的成员函数。</p></blockquote> <h3 id="objc-object-中的-isa"><a href="#objc-object-中的-isa" class="header-anchor">#</a> objc_object 中的 isa</h3> <p>之前我们已经写了<code>objc_object</code>的定义，可以知道，isa 其实是一个<code>isa_t</code>的对象，那<code>isa_t</code>是什么呢，我们继续看一下它的实现：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>union isa_t
+{
+//这里省略很多变量
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>可以知道，<code>isa_t</code>是个联合体,也就是说：<code>objc_object</code> 中的<code>isa</code>其实是个联合体</p> <h3 id="isa-bits-isa-mask-含义"><a href="#isa-bits-isa-mask-含义" class="header-anchor">#</a> isa.bits &amp; ISA_MASK 含义</h3> <p>上面我们知道，<code>isa</code>是个联合体，其内部的属性 bits 呢？</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>union isa_t
+{
+//省略部分方法和属性...
+uintptr_t bits;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>然后看<code>uintptr_t</code>实现：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>typedef unsigned long        uintptr_t;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>发现其是个<code>unsigned long</code>类型，而<code>ISA_MASK</code>的定义如下：</p> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment"># if __arm64__</span>
+<span class="token comment">#   define ISA_MASK        0x0000000ffffffff8ULL</span>
+<span class="token comment"># elif __x86_64__</span>
+<span class="token comment">#   define ISA_MASK        0x00007ffffffffff8ULL</span>
+<span class="token comment"># else</span>
+<span class="token comment">#   error unknown architecture for packed isa</span>
+<span class="token comment"># endif</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>可知，其实<code>ISA_MASK</code>还是个数值类型。也就是说判断两个对象是否是同一个<code>class</code>其实是通过比对<code>objc_object</code>中的数值计算后得出的结果是否相等得出的。</p> <p>于是，我们上面的类继承图表又可以做如下完善：<br> <img src="https://images.xiaozhuanlan.com/photo/2018/b8b1c56e5b97dafdd95d0400f08e64c2.png" alt=""></p> <p>讲完了 <code>isMemberOfClass</code>方法，<code>isKindOfClass</code>方法这里就不多做介绍了，给出其源代码即可：</p> <h2 id="是否父子类关系-iskindofclass"><a href="#是否父子类关系-iskindofclass" class="header-anchor">#</a> 是否父子类关系(isKindOfClass)</h2> <p>其实现如下：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>+ (BOOL)isKindOfClass:(Class)cls {
+for (Class tcls = object_getClass((id)self); tcls; tcls = tcls-&gt;superclass) {
+if (tcls == cls) return YES;
+    }
+return NO;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <ul><li><code>Class</code>类型本质是个结构体，该结构体中存储了该<code>NSObject</code>中的所有信息。</li> <li>比对两个类是否是同一个类，其实是判断<code>Class</code>中的某个数值运算的结果是否相等。</li></ul> <hr> <p>NSObject 的对象对外暴露的属性就只有 isa，重要性不言而喻。<br>
+isa 是一个 Class 类型的变量，他在 objc.h 中有定义，其实是个结构体指针，结构体名字为：objc_class。目前我们还不知道这个结构体的作用，但我们相信随着我们逐渐深入的查看源码，他定会被我们一览无余。<br>
+果不其然，我们随便找一个方法 isMemberOfClass （作用是判断某个对象是否是某个类的成员），通过我们的刨根问底，终于发现，判断某个对象是否属于某个类，其实是通过 object_getClass 来实现的，而这个方法正好就是结构体 objc_object（objc_class 子类） 中的方法。</p> <h2 id="结论"><a href="#结论" class="header-anchor">#</a> 结论</h2> <p>目前我们已经知道这个 object_getClass 类型的一个实例是 NSObject 类的成员变量，而且 NSObject 类的 class 方法，以及一切和 class 相关的方法，比如 isMemerOfClass，都是 objc_object 他来管理的。</p></div></section> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">2025/2/7 12:32:53</span></div></footer> <!----> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:0;" data-v-b57cc07c data-v-7dd95ae2></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div></div></div>
+    <script src="/assets/js/app.36d0a6ec.js" defer></script><script src="/assets/js/7.d2153018.js" defer></script><script src="/assets/js/2.a0c1b494.js" defer></script><script src="/assets/js/1.7fd99bae.js" defer></script><script src="/assets/js/76.a057f330.js" defer></script>
+  </body>
+</html>
