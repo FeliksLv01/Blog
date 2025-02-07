@@ -12,6 +12,8 @@ tags:
 
 现代 App 中通常会引入像 WebView、React Native、Flutter 这样的跨端解决方案，它们可以快速地实现功能的开发和上线。在使用这些方案时，都不可避免的会有一些功能需要使用 Native 能力，在涉及调用应用的 Native 能力的时候，它们都会采用一套自己独立的通信方式，对不同跨端方式提供 Native 能力的时候，不能实现完全的代码复用。本文主要介绍参考大厂相关跨端基建设计的一个统一跨端通信框架，对应用抹除跨端技术差异，实现 Native 资产复用。
 
+源码地址：https://github.com/FeliksLv01/NativeRPCServiceKit
+
 ## 整体架构
 
 框架借鉴服务端 RPC 协议概念，设计了 NativeRPC 协议。
