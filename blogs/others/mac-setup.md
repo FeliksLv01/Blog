@@ -32,13 +32,13 @@ cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
 安装命令高亮工具
 
 ```bash
-sudo git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.zsh/zsh-syntax-highlighting
+brew install zsh-syntax-highlighting
 ```
 
 在`.zshrc`文件最后添加
 
 ```shell
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ```
 
 ## 更改 iterm2 的主题
@@ -56,27 +56,8 @@ git clone https://github.com/dracula/iterm.git
 3. 从列表中选择 import
 4. 选择刚才下载主题中`Dracula.itermcolors` 文件，确定
 
-## 修改 VSCode 终端设置
+## ssh 配置
 
-因为 VSCode 主题使用的是`One Dark Pro`，需要修改下终端的高亮设置。
-
-```json
-"workbench.colorCustomizations": {
-  "terminal.ansiBrightBlack": "#6272A4",
-  "terminal.ansiBrightRed": "#FF6E6E",
-  "terminal.ansiBrightGreen": "#69FF94",
-  "terminal.ansiBrightYellow": "#FFFFA5",
-  "terminal.ansiBrightBlue": "#D6ACFF",
-  "terminal.ansiBrightMagenta": "#FF92DF",
-  "terminal.ansiBrightCyan": "#A4FFFF",
-  "terminal.ansiBrightWhite": "#FFFFFF",
-  "terminal.ansiBlack": "#21222C",
-  "terminal.ansiRed": "#FF5555",
-  "terminal.ansiGreen": "#50FA7B",
-  "terminal.ansiYellow":"#F1FA8C",
-  "terminal.ansiBlue": "#BD93F9",
-  "terminal.ansiMagenta": "#FF79C6",
-  "terminal.ansiCyan": "#8BE9FD",
-  "terminal.ansiWhite": "#F8F8F2"
-}
+```shell
+ssh-keygen -t ed25519 -C "felikslv@163.com"
 ```
